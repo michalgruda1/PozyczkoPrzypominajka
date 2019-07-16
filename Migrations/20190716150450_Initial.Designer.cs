@@ -6,10 +6,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PozyczkoPrzypominajkaV2.Data;
 
-namespace PozyczkoPrzypominajkaV2.Data.Migrations
+namespace PozyczkoPrzypominajkaV2.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190716143651_Initial")]
+    [Migration("20190716150450_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

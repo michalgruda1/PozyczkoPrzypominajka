@@ -14,6 +14,7 @@ using PozyczkoPrzypominajkaV2.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using PozyczkoPrzypominajka.Models;
 
 namespace PozyczkoPrzypominajkaV2
 {
@@ -43,7 +44,6 @@ namespace PozyczkoPrzypominajkaV2
 						mySqlOptions.ServerVersion(new Version(8, 0, 16), ServerType.MySql);
 					}
 			));
-
 
 			services.AddDefaultIdentity<IdentityUser>()
 					.AddDefaultUI(UIFramework.Bootstrap4)
