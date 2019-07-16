@@ -7,7 +7,7 @@ using PozyczkoPrzypominajka.Models;
 
 namespace PozyczkoPrzypominajkaV2.Data
 {
-	public class ApplicationDbContext : IdentityDbContext
+	public class ApplicationDbContext : IdentityDbContext<AppUser>
 	{
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 				: base(options)
@@ -37,8 +37,8 @@ namespace PozyczkoPrzypominajkaV2.Data
 			builder.Entity<Notification>().Property(n => n.Text).IsRequired();
 			builder.Entity<Notification>().Property(n => n.Channel).IsRequired().HasConversion<int>();
 
-			builder.Entity<User>().Property(u => u.Imie).IsRequired();
-			builder.Entity<User>().Property(u => u.Nazwisko).IsRequired();
+			builder.Entity<AppUser>().Property(u => u.Imie).IsRequired();
+			builder.Entity<AppUser>().Property(u => u.Nazwisko).IsRequired();
 
 			base.OnModelCreating(builder);
 		}

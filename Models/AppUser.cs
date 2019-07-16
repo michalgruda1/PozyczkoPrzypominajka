@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace PozyczkoPrzypominajka.Models
 {
-	public class User : IdentityUser
+	public class AppUser : IdentityUser
 	{
 		public int UserID { get; set; }
 		[PersonalData]

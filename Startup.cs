@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using PozyczkoPrzypominajka.Models;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace PozyczkoPrzypominajkaV2
 {
@@ -45,11 +46,48 @@ namespace PozyczkoPrzypominajkaV2
 					}
 			));
 
-			services.AddDefaultIdentity<IdentityUser>()
-					.AddDefaultUI(UIFramework.Bootstrap4)
-					.AddEntityFrameworkStores<ApplicationDbContext>();
+			services.AddIdentity<AppUser, IdentityRole>()
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+				.AddDefaultUI(UIFramework.Bootstrap4)
+				.AddDefaultTokenProviders();
+
+			services.Configure<IdentityOptions>(options =>
+			{
+				// Password settings.
+				options.Password.RequireDigit = true;
+				options.Password.RequireLowercase = true;
+				options.Password.RequireNonAlphanumeric = true;
+				options.Password.RequireUppercase = true;
+				options.Password.RequiredLength = 6;
+				options.Password.RequiredUniqueChars = 1;
+
+				// Lockout settings.
+				options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+				options.Lockout.MaxFailedAccessAttempts = 5;
+				options.Lockout.AllowedForNewUsers = true;
+
+				options.SignIn.RequireConfirmedEmail = false;
+				options.SignIn.RequireConfirmedPhoneNumber = false;
+
+				// User settings.
+				options.User.AllowedUserNameCharacters =
+				"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+				options.User.RequireUniqueEmail = false;
+			});
+
+			services.ConfigureApplicationCookie(options =>
+			{
+				// Cookie settings
+				options.Cookie.HttpOnly = true;
+				options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+
+				options.LoginPath = "/Identity/Account/Login";
+				options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+				options.SlidingExpiration = true;
+			});
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

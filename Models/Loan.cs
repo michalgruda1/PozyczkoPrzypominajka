@@ -8,8 +8,8 @@ namespace PozyczkoPrzypominajka.Models
 	{
 		public int LoanID { get; set; }
 		public DateTime Date { get; set; }
-		public User Giver { get; set; }
-		public User Receiver { get; set; }
+		public AppUser Giver { get; set; }
+		public AppUser Receiver { get; set; }
 		public decimal Amount { get; set; }
 		public DateTime RepaymentDate { get; set; }
 		public decimal RepaymentAmount { get; set; }

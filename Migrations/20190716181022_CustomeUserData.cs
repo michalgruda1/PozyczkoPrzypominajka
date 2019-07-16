@@ -2,7 +2,7 @@
 
 namespace PozyczkoPrzypominajkaV2.Migrations
 {
-    public partial class Initial : Migration
+    public partial class CustomeUserData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
