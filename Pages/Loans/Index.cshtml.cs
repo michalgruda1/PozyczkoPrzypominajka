@@ -24,15 +24,34 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			_userManager = userManager;
 		}
 
-		public IList<LoanViewModel> Loans { get; set; }
+		public IList<LoanViewModel> LoansGivenUnpaid { get; set; }
+		public IList<LoanViewModel> LoansTakenUnpaid { get; set; }
 
 		public async Task OnGetAsync()
 		{
 			var currentUser = await _userManager.GetUserAsync(User);
 
-			Loans = await _context.Loans
-				.Where(l => l.Giver.Id == currentUser.Id || l.Receiver.Id == currentUser.Id)
+			LoansTakenUnpaid = await _context.Loans
+				.Where(l =>
+					l.Receiver.Id == currentUser.Id)
 				.Select(l => new LoanViewModel() {
+					LoanID = l.LoanID,
+					Date = l.Date,
+					Giver = l.Giver.Imie + " " + l.Giver.Nazwisko,
+					Receiver = l.Receiver.Imie + " " + l.Receiver.Nazwisko,
+					Amount = l.Amount,
+					RepaymentDate = l.RepaymentDate,
+					RepaymentAmount = l.RepaymentAmount,
+					Interest = l.Interest,
+				})
+				.AsNoTracking()
+				.ToListAsync();
+				
+			LoansGivenUnpaid = await _context.Loans
+				.Where(l =>
+					l.Giver.Id == currentUser.Id)
+				.Select(l => new LoanViewModel()
+				{
 					LoanID = l.LoanID,
 					Date = l.Date,
 					Giver = l.Giver.Imie + " " + l.Giver.Nazwisko,
@@ -44,7 +63,7 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 				})
 				.AsNoTracking()
 				.ToListAsync();
-				
+
 		}
 	}
 }
