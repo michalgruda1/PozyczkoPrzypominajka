@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.29021.104
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PozyczkoPrzypominajkaV2", "PozyczkoPrzypominajkaV2.csproj", "{6D9044A8-B443-473A-81CE-74FD123594F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "..\UnitTests\UnitTests.csproj", "{B550A6F9-6254-4C6F-BEB4-71AC06D9D1FE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6D9044A8-B443-473A-81CE-74FD123594F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D9044A8-B443-473A-81CE-74FD123594F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D9044A8-B443-473A-81CE-74FD123594F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B550A6F9-6254-4C6F-BEB4-71AC06D9D1FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B550A6F9-6254-4C6F-BEB4-71AC06D9D1FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B550A6F9-6254-4C6F-BEB4-71AC06D9D1FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B550A6F9-6254-4C6F-BEB4-71AC06D9D1FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
