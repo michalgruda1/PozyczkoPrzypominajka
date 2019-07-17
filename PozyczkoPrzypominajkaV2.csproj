@@ -6,6 +6,13 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20190717162146_LoansConnectedToPaymentsAndNotifications.cs" />
+    <Compile Remove="Migrations\20190717162146_LoansConnectedToPaymentsAndNotifications.Designer.cs" />
+    <Compile Remove="Migrations\20190717162933_LoansConnectedToPaymentsAndNotifications.cs" />
+    <Compile Remove="Migrations\20190717162933_LoansConnectedToPaymentsAndNotifications.Designer.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />

@@ -32,10 +32,12 @@ namespace PozyczkoPrzypominajkaV2.Data
 			builder.Entity<Payment>().Property(p => p.PlannedPaymentDate).IsRequired();
 			builder.Entity<Payment>().Property(p => p.Amount).IsRequired();
 			builder.Entity<Payment>().Property(p => p.IsPaid).IsRequired();
+			builder.Entity<Payment>().HasOne(p => p.Loan).WithMany(l => l.Payments).HasForeignKey(p => p.LoanID);
 
 			builder.Entity<Notification>().Property(n => n.When).IsRequired();
 			builder.Entity<Notification>().Property(n => n.Text).IsRequired();
 			builder.Entity<Notification>().Property(n => n.Channel).IsRequired().HasConversion<int>();
+			builder.Entity<Notification>().HasOne(n => n.Loan).WithMany(l => l.Notifications).HasForeignKey(p => p.LoanID);
 
 			builder.Entity<AppUser>().Property(u => u.Imie).IsRequired();
 			builder.Entity<AppUser>().Property(u => u.Nazwisko).IsRequired();
