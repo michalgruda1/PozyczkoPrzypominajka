@@ -73,3 +73,66 @@
         }
     </tbody>
 </table>
+<h3>Udzielone, niespłacone</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Giver)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Receiver)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].RepaymentDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].RepaymentAmount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Interest)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.LoansGivenUnpaid)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Giver)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Receiver)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RepaymentDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RepaymentAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Interest)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.LoanID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.LoanID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.LoanID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
