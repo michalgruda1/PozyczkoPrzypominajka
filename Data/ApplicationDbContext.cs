@@ -15,7 +15,6 @@ namespace PozyczkoPrzypominajkaV2.Data
 		}
 
 		public DbSet<Loan> Loans { get; set; }
-		public DbSet<Payment> Payments { get; set; }
 		public DbSet<Notification> Notifications { get; set; }
 
 		protected override void OnModelCreating(ModelBuilder builder)
@@ -27,12 +26,6 @@ namespace PozyczkoPrzypominajkaV2.Data
 			builder.Entity<Loan>().Property(l => l.RepaymentDate).IsRequired();
 			builder.Entity<Loan>().Property(l => l.RepaymentAmount).IsRequired();
 			builder.Entity<Loan>().HasMany<Notification>().WithOne(n => n.Loan).HasForeignKey(n => n.LoanID).OnDelete(DeleteBehavior.Cascade).IsRequired();
-			builder.Entity<Loan>().HasMany<Payment>().WithOne(p => p.Loan).HasForeignKey(p => p.LoanID).OnDelete(DeleteBehavior.Cascade).IsRequired();
-
-			builder.Entity<Payment>().Property(p => p.PlannedPaymentDate).IsRequired();
-			builder.Entity<Payment>().Property(p => p.Amount).IsRequired();
-			builder.Entity<Payment>().Property(p => p.IsPaid).IsRequired();
-			builder.Entity<Payment>().HasOne(p => p.Loan).WithMany(l => l.Payments).HasForeignKey(p => p.LoanID);
 
 			builder.Entity<Notification>().Property(n => n.When).IsRequired();
 			builder.Entity<Notification>().Property(n => n.Text).IsRequired();

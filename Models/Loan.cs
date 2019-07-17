@@ -22,7 +22,6 @@ namespace PozyczkoPrzypominajka.Models
 				return Math.Pow(Decimal.ToDouble(RepaymentAmount / Amount), 365D / (RepaymentDate - Date).TotalDays);
 			}
 		}
-		public ICollection<Payment> Payments { get; set; }
 		public ICollection<Notification> Notifications { get; set; }
 	}
 }
