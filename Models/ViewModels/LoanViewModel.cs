@@ -30,5 +30,7 @@ namespace PozyczkoPrzypominajkaV2.Models.ViewModels
 
 		[Display(Name = "Oprocentowanie"), DisplayFormat(DataFormatString = "P0")]
 		public double Interest { get; set; }
+
+		public bool IsPaid { get; set; }
 	}
 }
