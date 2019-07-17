@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PozyczkoPrzypominajka.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -31,6 +32,7 @@ namespace PozyczkoPrzypominajkaV2.Models.ViewModels
 		[Display(Name = "Oprocentowanie"), DisplayFormat(DataFormatString = "P0")]
 		public double Interest { get; set; }
 
-		public bool IsPaid { get; set; }
+		[DataType(DataType.Text)]
+		public string Status { get; set; }
 	}
 }

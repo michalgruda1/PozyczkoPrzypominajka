@@ -18,6 +18,9 @@
                 @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Date)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Status)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Giver)
             </th>
             <th>
@@ -47,6 +50,9 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Giver)
                 </td>
                 <td>
@@ -73,12 +79,16 @@
         }
     </tbody>
 </table>
+
 <h3>Udzielone, niespłacone</h3>
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Status)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Giver)
@@ -108,6 +118,9 @@
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Giver)

@@ -10,5 +10,10 @@ namespace PozyczkoPrzypominajka.Models
 		public string Imie { get; set; }
 		[PersonalData]
 		public string Nazwisko { get; set; }
+
+		public override string ToString()
+		{
+			return Imie + " " + Nazwisko;
+		}
 	}
 }

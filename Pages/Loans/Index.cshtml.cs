@@ -30,40 +30,59 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 		public async Task OnGetAsync()
 		{
 			var currentUser = await _userManager.GetUserAsync(User);
+			LoansGivenUnpaid = await GetLoansGivenUnpaid(currentUser);
+			LoansTakenUnpaid = await GetLoansTakenUnpaid(currentUser);
+		}
 
-			LoansTakenUnpaid = await _context.Loans
+		private async Task<IList<LoanViewModel>> GetLoansTakenUnpaid(AppUser currentUser)
+		{
+			var ret = await _context.Loans
 				.Where(l =>
-					l.Receiver.Id == currentUser.Id)
-				.Select(l => new LoanViewModel() {
-					LoanID = l.LoanID,
-					Date = l.Date,
-					Giver = l.Giver.Imie + " " + l.Giver.Nazwisko,
-					Receiver = l.Receiver.Imie + " " + l.Receiver.Nazwisko,
-					Amount = l.Amount,
-					RepaymentDate = l.RepaymentDate,
-					RepaymentAmount = l.RepaymentAmount,
-					Interest = l.Interest,
-				})
-				.AsNoTracking()
-				.ToListAsync();
-				
-			LoansGivenUnpaid = await _context.Loans
-				.Where(l =>
-					l.Giver.Id == currentUser.Id)
-				.Select(l => new LoanViewModel()
-				{
-					LoanID = l.LoanID,
-					Date = l.Date,
-					Giver = l.Giver.Imie + " " + l.Giver.Nazwisko,
-					Receiver = l.Receiver.Imie + " " + l.Receiver.Nazwisko,
-					Amount = l.Amount,
-					RepaymentDate = l.RepaymentDate,
-					RepaymentAmount = l.RepaymentAmount,
-					Interest = l.Interest
-				})
+					l.Receiver.UserID == currentUser.UserID
+					&& l.Status != StatusEnum.Paid)
+				.Select(l =>
+					new LoanViewModel
+					{
+						LoanID = l.LoanID,
+						Date = l.Date,
+						Giver = l.Giver.ToString(),
+						Receiver = l.Receiver.ToString(),
+						Amount = l.Amount,
+						RepaymentDate = l.RepaymentDate,
+						RepaymentAmount = l.RepaymentAmount,
+						Interest = l.Interest,
+						Status = l.Status.ToString(),
+					})
 				.AsNoTracking()
 				.ToListAsync();
 
+			return ret;
+
+		}
+
+		private async Task<IList<LoanViewModel>> GetLoansGivenUnpaid(AppUser currentUser)
+		{
+			var ret = await _context.Loans
+				.Where(l => 
+					l.Giver.UserID == currentUser.UserID
+					&& l.Status != StatusEnum.Paid)
+				.Select(l =>
+					new LoanViewModel
+					{
+						LoanID = l.LoanID,
+						Date = l.Date,
+						Giver = l.Giver.ToString(),
+						Receiver = l.Receiver.ToString(),
+						Amount = l.Amount,
+						RepaymentDate = l.RepaymentDate,
+						RepaymentAmount = l.RepaymentAmount,
+						Interest = l.Interest,
+						Status = l.Status.ToString(),
+					})
+				.AsNoTracking()
+				.ToListAsync();
+
+			return ret;
 		}
 	}
 }
