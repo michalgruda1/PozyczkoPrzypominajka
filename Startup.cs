@@ -86,7 +86,10 @@ namespace PozyczkoPrzypominajkaV2
 				options.SlidingExpiration = true;
 			});
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMvc()
+				.AddRazorPagesOptions(options => 
+					options.Conventions.AuthorizeFolder("/Loans"))
+				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
 		}
 
