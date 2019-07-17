@@ -2,12 +2,12 @@
 @model PozyczkoPrzypominajkaV2.Pages.Loans.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Nowa pożyczka";
 }
 
-<h1 class="my-lg-5">Create</h1>
+<h1  class="my-lg-5">Nowa pożyczka</h1>
 
-<h4>Loan</h4>
+<h4>Udzielam pożyczki</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -32,6 +32,11 @@
                 <label asp-for="Loan.RepaymentAmount" class="control-label"></label>
                 <input asp-for="Loan.RepaymentAmount" class="form-control" />
                 <span asp-validation-for="Loan.RepaymentAmount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Loan.Status" class="control-label"></label>
+                <select asp-for="Loan.Status" class="form-control"></select>
+                <span asp-validation-for="Loan.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
