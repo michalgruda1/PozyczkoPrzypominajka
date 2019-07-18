@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20190717162933_LoansConnectedToPaymentsAndNotifications.Designer.cs" />
     <Compile Remove="Migrations\20190717204452_LoanStatusAdded.cs" />
     <Compile Remove="Migrations\20190717204452_LoanStatusAdded.Designer.cs" />
+    <Compile Remove="Migrations\20190717220525_UserIDIdentity.cs" />
+    <Compile Remove="Migrations\20190717220525_UserIDIdentity.Designer.cs" />
   </ItemGroup>
 
 

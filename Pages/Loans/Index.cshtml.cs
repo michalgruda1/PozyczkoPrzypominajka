@@ -53,6 +53,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 						Interest = l.Interest,
 						Status = l.Status.ToString(),
 					})
+				.OrderByDescending(l => l.Status)
+					.ThenByDescending(l => l.RepaymentDate)
 				.AsNoTracking()
 				.ToListAsync();
 
@@ -79,6 +81,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 						Interest = l.Interest,
 						Status = l.Status.ToString(),
 					})
+				.OrderByDescending(l => l.Status)
+					.ThenByDescending(l => l.RepaymentDate)
 				.AsNoTracking()
 				.ToListAsync();
 
