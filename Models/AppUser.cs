@@ -5,7 +5,6 @@ namespace PozyczkoPrzypominajka.Models
 {
 	public class AppUser : IdentityUser
 	{
-		public int UserID { get; set; }
 		[PersonalData]
 		public string Imie { get; set; }
 		[PersonalData]

@@ -11,7 +11,7 @@ namespace PozyczkoPrzypominajkaV2.Models.ViewModels
 	{
 		public int LoanID { get; set; }
 
-		[Display(Name = "Udzielenie"), DataType(DataType.Date), DisplayFormat(DataFormatString = "yyyy.MM.dd")]
+		[Display(Name = "Udzielenie"), DataType(DataType.Date), DisplayFormat(DataFormatString = "d")]
 		public DateTime Date { get; set; }
 
 		[Display(Name = "Udzielający"), DataType(DataType.Text)]
@@ -20,16 +20,16 @@ namespace PozyczkoPrzypominajkaV2.Models.ViewModels
 		[Display(Name = "Biorący"), DataType(DataType.Text)]
 		public string Receiver { get; set; }
 
-		[Display(Name = "Pożyczone"), DataType(DataType.Currency), DisplayFormat(DataFormatString = "C0")]
+		[Display(Name = "Kwota pożyczki"), DataType(DataType.Currency), DisplayFormat(DataFormatString = "C0")]
 		public decimal Amount { get; set; }
 
-		[Display(Name = "Spłata"), DataType(DataType.Date), DisplayFormat(DataFormatString = "yyyy.MM.dd")]
+		[Display(Name = "Spłata"), DataType(DataType.Date), DisplayFormat(DataFormatString = "d")]
 		public DateTime RepaymentDate { get; set; }
 
-		[Display(Name = "Do oddania"), DataType(DataType.Date), DisplayFormat(DataFormatString = "yyyy.MM.dd")]
+		[Display(Name = "Do oddania"), DataType(DataType.Currency), DisplayFormat(DataFormatString = "C2")]
 		public decimal RepaymentAmount { get; set; }
 
-		[Display(Name = "Oprocentowanie"), DisplayFormat(DataFormatString = "P0")]
+		[Display(Name = "Oprocentowanie (RRSO)"), DisplayFormat(DataFormatString = "P0")]
 		public double Interest { get; set; }
 
 		[DataType(DataType.Text)]
