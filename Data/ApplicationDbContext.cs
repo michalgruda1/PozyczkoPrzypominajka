@@ -39,11 +39,7 @@ namespace PozyczkoPrzypominajkaV2.Data
 
 			base.OnModelCreating(builder);
 
-			// Roles init
-			builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() });
-			builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "User".ToUpper() });
-
-			// Admin user init is in DBInitialization class
+			// Users and roles init is in DBInitialization class
 
 		}
 	}

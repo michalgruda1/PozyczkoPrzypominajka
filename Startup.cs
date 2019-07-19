@@ -115,7 +115,9 @@ namespace PozyczkoPrzypominajkaV2
 
 			app.UseAuthentication();
 
+			DBInitialization.InitRoles(roleManager);
 			DBInitialization.SeedAdminUsers(userManager, configuration);
+			DBInitialization.SeedUsers(userManager);
 
 			app.UseMvc();
 		}
