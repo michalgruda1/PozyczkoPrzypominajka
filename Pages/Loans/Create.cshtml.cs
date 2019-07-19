@@ -16,20 +16,20 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 	{
 		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager)
 		{
-			_context = context;
-			_userManager = userManager;
+			this.context = context;
+			this.userManager = userManager;
 		}
 
-		private readonly ApplicationDbContext _context;
-		private readonly UserManager<AppUser> _userManager;
+		private readonly ApplicationDbContext context;
+		private readonly UserManager<AppUser> userManager;
 
 		[BindProperty] public Loan Loan { get; set; } = new Loan();
-		public SelectList Receivers { get; set; } = null;
+		[BindProperty] public SelectList Receivers { get; set; } = new SelectList();
 
 		public async Task<IActionResult> OnGetAsync()
 		{
-			var currentUser = await _userManager.GetUserAsync(User);
-			var Receivers = await InitReceivers(currentUser);
+			var currentUser = await userManager.GetUserAsync(User);
+			Receivers = await InitReceivers(currentUser, userManager);
 			Loan.Giver = currentUser;
 			Loan.Date = DateTime.Now;
 			Loan.RepaymentDate = DateTime.Now + TimeSpan.FromDays(7);
@@ -44,16 +44,18 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 				return Page();
 			}
 
-			_context.Loans.Add(Loan);
-			await _context.SaveChangesAsync();
+			Loan.Receiver = await userManager.FindByIdAsync((string)Receivers.SelectedValue);
+			context.Loans.Add(Loan);
+			await context.SaveChangesAsync();
 
 			return RedirectToPage("./Index");
 		}
 
-		private async Task<SelectList> InitReceivers(AppUser currentUser)
+		private async Task<SelectList> InitReceivers(AppUser currentUser, UserManager<AppUser> userManager)
 		{
-			var receivers = await _context.Users
-				.Where(u => u.Id != currentUser.Id)
+			var receivers = await context.Users
+				.Where(u =>
+					u.Id != currentUser.Id)
 				.Select(u =>
 					new
 					{
