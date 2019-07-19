@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PozyczkoPrzypominajka.Models;
@@ -37,6 +38,13 @@ namespace PozyczkoPrzypominajkaV2.Data
 			builder.Entity<AppUser>().Property(u => u.Nazwisko).IsRequired();
 
 			base.OnModelCreating(builder);
+
+			// Roles init
+			builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "Admin", NormalizedName = "Admin".ToUpper() });
+			builder.Entity<IdentityRole>().HasData(new IdentityRole { Name = "User", NormalizedName = "User".ToUpper() });
+
+			// Admin user init is in DBInitialization class
+
 		}
 	}
 }
