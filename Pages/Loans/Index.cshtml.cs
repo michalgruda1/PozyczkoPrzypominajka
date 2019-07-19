@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
@@ -38,7 +39,7 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 		{
 			var ret = await _context.Loans
 				.Where(l =>
-					l.Receiver.UserID == currentUser.UserID
+					l.Receiver.Id == currentUser.Id
 					&& l.Status != StatusEnum.Paid)
 				.Select(l =>
 					new LoanViewModel
@@ -66,7 +67,7 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 		{
 			var ret = await _context.Loans
 				.Where(l => 
-					l.Giver.UserID == currentUser.UserID
+					l.Giver.Id == currentUser.Id
 					&& l.Status != StatusEnum.Paid)
 				.Select(l =>
 					new LoanViewModel
