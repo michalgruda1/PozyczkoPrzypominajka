@@ -21,8 +21,8 @@ namespace PozyczkoPrzypominajkaV2.Data
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			builder.Entity<Loan>().Property(l => l.Date).IsRequired();
-			builder.Entity<Loan>().HasOne(l => l.Giver).WithMany().IsRequired();
-			builder.Entity<Loan>().HasOne(l => l.Receiver).WithMany().IsRequired();
+			builder.Entity<Loan>().HasOne(l => l.Giver).WithMany().IsRequired().HasForeignKey("GiverID");
+			builder.Entity<Loan>().HasOne(l => l.Receiver).WithMany().IsRequired().HasForeignKey("ReceiverID");
 			builder.Entity<Loan>().Property(l => l.Amount).IsRequired();
 			builder.Entity<Loan>().Property(l => l.RepaymentDate).IsRequired();
 			builder.Entity<Loan>().Property(l => l.RepaymentAmount).IsRequired();
