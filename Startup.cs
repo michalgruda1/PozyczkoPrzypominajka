@@ -16,6 +16,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using PozyczkoPrzypominajka.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using System.Globalization;
+using Microsoft.AspNetCore.Localization;
 
 namespace PozyczkoPrzypominajkaV2
 {
@@ -120,6 +122,16 @@ namespace PozyczkoPrzypominajkaV2
 			DBInitialization.SeedUsers(userManager);
 
 			app.UseMvc();
+
+			var defaultCulture = new CultureInfo("pl-PL");
+			var localizationOptions = new RequestLocalizationOptions
+			{
+				DefaultRequestCulture = new RequestCulture(defaultCulture),
+				SupportedCultures = new List<CultureInfo> { defaultCulture },
+				SupportedUICultures = new List<CultureInfo> { defaultCulture }
+			};
+			app.UseRequestLocalization(localizationOptions);
+
 		}
 	}
 }

@@ -1,0 +1,20 @@
+{
+  "name": "pozyczkoprzypominajkav2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Program.cs",
+  "dependencies": {
+    "globalize": "^1.4.2",
+    "jquery-validation-globalize": "^0.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://dev.azure.com/michalgru/PozyczkoPrzypominajka/_git/PozyczkoPrzypominajkaV2"
+  },
+  "author": "Michał Gruda",
+  "license": "ISC"
+}
