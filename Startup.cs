@@ -96,8 +96,12 @@ namespace PozyczkoPrzypominajkaV2
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IHostingEnvironment env, UserManager<AppUser> userManager,
-			RoleManager<IdentityRole> roleManager, IConfiguration configuration)
+		public void Configure(IApplicationBuilder app,
+			IHostingEnvironment env,
+			UserManager<AppUser> userManager,
+			RoleManager<IdentityRole> roleManager,
+			IConfiguration configuration,
+			ApplicationDbContext context)
 		{
 			if (env.IsDevelopment())
 			{
@@ -116,6 +120,8 @@ namespace PozyczkoPrzypominajkaV2
 			app.UseCookiePolicy();
 
 			app.UseAuthentication();
+
+			context.Database.MigrateAsync();
 
 			DBInitialization.InitRoles(roleManager);
 			DBInitialization.SeedAdminUsers(userManager, configuration);
