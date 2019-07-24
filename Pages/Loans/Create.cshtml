@@ -15,13 +15,13 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Loan.Giver" class="control-label"></label>
-                <input asp-for="Loan.Giver" class="form-control" disabled />
+                <input asp-for="Loan.Giver" class="form-control" readonly />
                 <span asp-validation-for="Loan.Giver" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Loan.Receiver" class="control-label"></label>
-                <select asp-for="Loan.Receiver" asp-items="@Model.Receivers" class="form-control">
-                    <option>Wybierz...</option>
+                <select asp-for="Loan.ReceiverID" asp-items="@Model.Receivers" class="form-control">
+                    <option value="">Wybierz...</option>
                 </select>
                 <span asp-validation-for="Loan.Receiver" class="text-danger"></span>
             </div>
@@ -47,7 +47,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Loan.Interest" class="control-label"></label>
-                <input asp-for="Loan.Interest" class="form-control" />
+                <input asp-for="Loan.Interest" class="form-control" readonly />
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

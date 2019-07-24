@@ -23,14 +23,21 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<AppUser> userManager;
 
-		[BindProperty] public Loan Loan { get; set; } = new Loan();
-		[BindProperty] public SelectList Receivers { get; set; } = new SelectList();
+		[BindProperty]
+		public Loan Loan { get; set; }
+
+		[BindProperty]
+		public string Receiver { get; set; }
+
+		[BindProperty]
+		public List<SelectListItem> Receivers { get; set; }
 
 		public async Task<IActionResult> OnGetAsync()
 		{
+			Loan = new Loan();
 			var currentUser = await userManager.GetUserAsync(User);
-			Receivers = await InitReceivers(currentUser, userManager);
 			Loan.Giver = currentUser;
+			Receivers = await InitReceivers(currentUser, selected: null);
 			Loan.Date = DateTime.Now;
 			Loan.RepaymentDate = DateTime.Now + TimeSpan.FromDays(7);
 
@@ -43,15 +50,15 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			{
 				return Page();
 			}
-
-			Loan.Receiver = await userManager.FindByIdAsync((string)Receivers.SelectedValue);
+			var currentUser = await userManager.GetUserAsync(User);
+			Loan.GiverID = currentUser.Id;
 			context.Loans.Add(Loan);
 			await context.SaveChangesAsync();
 
 			return RedirectToPage("./Index");
 		}
 
-		private async Task<SelectList> InitReceivers(AppUser currentUser, UserManager<AppUser> userManager)
+		private async Task<List<SelectListItem>> InitReceivers(AppUser currentUser, string selected)
 		{
 			var receivers = await context.Users
 				.Where(u =>
@@ -65,10 +72,20 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 				.AsNoTracking()
 				.ToListAsync();
 
-			var ret = new SelectList(receivers, "id", "user");
+			var ret = new List<SelectListItem>();
+
+			receivers.ForEach(user => {
+				if (selected != null && user.id == selected)
+				{
+					ret.Add(new SelectListItem(user.user, user.id, selected: true));
+				}
+				else
+				{
+					ret.Add(new SelectListItem(user.user, user.id, selected: false));
+				}
+			});
 
 			return ret;
 		}
-
 	}
 }
