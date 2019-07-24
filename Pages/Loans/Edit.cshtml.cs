@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,65 +12,71 @@ using PozyczkoPrzypominajkaV2.Data;
 
 namespace PozyczkoPrzypominajkaV2.Pages.Loans
 {
-    public class EditModel : PageModel
-    {
-        private readonly PozyczkoPrzypominajkaV2.Data.ApplicationDbContext _context;
+	public class EditModel : PageModel
+	{
+		private readonly ApplicationDbContext context;
+		private readonly UserManager<AppUser> userManager;
 
-        public EditModel(PozyczkoPrzypominajkaV2.Data.ApplicationDbContext context)
-        {
-            _context = context;
-        }
+		public EditModel(ApplicationDbContext context, UserManager<AppUser> userManager)
+		{
+			this.context = context;
+			this.userManager = userManager;
+		}
 
-        [BindProperty]
-        public Loan Loan { get; set; }
+		[BindProperty]
+		public Loan Loan { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+		public async Task<IActionResult> OnGetAsync(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
 
-            Loan = await _context.Loans.FirstOrDefaultAsync(m => m.LoanID == id);
+			Loan = await context.Loans
+					.Include(l => l.Giver)
+					.Include(l => l.Receiver)
+					.FirstOrDefaultAsync(l => l.LoanID == id);
 
-            if (Loan == null)
-            {
-                return NotFound();
-            }
-            return Page();
-        }
+			if (Loan == null)
+			{
+				return NotFound();
+			}
 
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+			return Page();
+		}
 
-            _context.Attach(Loan).State = EntityState.Modified;
+		public async Task<IActionResult> OnPostAsync()
+		{
+			if (!ModelState.IsValid)
+			{
+				return Page();
+			}
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!LoanExists(Loan.LoanID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+			context.Attach(Loan).State = EntityState.Modified;
 
-            return RedirectToPage("./Index");
-        }
+			try
+			{
+				await context.SaveChangesAsync();
+			}
+			catch (DbUpdateConcurrencyException)
+			{
+				if (!LoanExists(Loan.LoanID))
+				{
+					return NotFound();
+				}
+				else
+				{
+					throw;
+				}
+			}
 
-        private bool LoanExists(int id)
-        {
-            return _context.Loans.Any(e => e.LoanID == id);
-        }
-    }
+			return RedirectToPage("./Index");
+		}
+
+		private bool LoanExists(int id)
+		{
+			return context.Loans.Any(e => e.LoanID == id);
+		}
+	}
 }

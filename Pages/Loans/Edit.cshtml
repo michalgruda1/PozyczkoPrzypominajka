@@ -5,7 +5,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1 class="my-lg-5">Edit</h1>
+<h1>Edit</h1>
 
 <h4>Loan</h4>
 <hr />
@@ -14,10 +14,20 @@
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Loan.LoanID" />
+            <input type="hidden" asp-for="Loan.GiverID" />
+            <input type="hidden" asp-for="Loan.ReceiverID" />
             <div class="form-group">
                 <label asp-for="Loan.Date" class="control-label"></label>
                 <input asp-for="Loan.Date" class="form-control" />
                 <span asp-validation-for="Loan.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Loan.Giver" class="control-label"></label>
+                <input asp-for="Loan.Giver" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Loan.Receiver" class="control-label"></label>
+                <input asp-for="Loan.Receiver" class="form-control" disabled />
             </div>
             <div class="form-group">
                 <label asp-for="Loan.Amount" class="control-label"></label>
@@ -34,6 +44,15 @@
                 <input asp-for="Loan.RepaymentAmount" class="form-control" />
                 <span asp-validation-for="Loan.RepaymentAmount" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Loan.Status" class="control-label"></label>
+                <input asp-for="Loan.Status" class="form-control" disabled />
+            </div>
+            <div class="form-group">
+                <label asp-for="Loan.Interest" class="control-label"></label>
+                <input asp-for="Loan.Interest" class="form-control" disabled />
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
