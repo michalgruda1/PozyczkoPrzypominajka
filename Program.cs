@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+using System.Net;
 
 namespace PozyczkoPrzypominajkaV2
 {
@@ -18,7 +20,11 @@ namespace PozyczkoPrzypominajkaV2
 		}
 
 		public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-				WebHost.CreateDefaultBuilder(args)
-						.UseStartup<Startup>();
+			WebHost.CreateDefaultBuilder(args)
+			.UseStartup<Startup>()
+			.ConfigureKestrel((context, options) =>
+			{
+				options.Listen(IPAddress.Parse("185.238.75.231"), 5000);
+			});
 	}
 }
