@@ -103,6 +103,8 @@ namespace PozyczkoPrzypominajkaV2
 			IConfiguration configuration,
 			ApplicationDbContext context)
 		{
+			context.Database.Migrate();
+
 			if (env.IsDevelopment())
 			{
 				app.UseDeveloperExceptionPage();
@@ -120,8 +122,6 @@ namespace PozyczkoPrzypominajkaV2
 			app.UseCookiePolicy();
 
 			app.UseAuthentication();
-
-			context.Database.MigrateAsync();
 
 			DBInitialization.InitRoles(roleManager);
 			DBInitialization.SeedAdminUsers(userManager, configuration);
