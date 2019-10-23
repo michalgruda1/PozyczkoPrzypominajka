@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
@@ -45,7 +46,6 @@ namespace PozyczkoPrzypominajkaV2
 
 			services.AddIdentity<AppUser, IdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>()
-				.AddDefaultUI(UIFramework.Bootstrap4)
 				.AddDefaultTokenProviders();
 
 			services.Configure<IdentityOptions>(options =>
@@ -83,16 +83,15 @@ namespace PozyczkoPrzypominajkaV2
 				options.SlidingExpiration = true;
 			});
 
-			services.AddMvc()
-				.AddRazorPagesOptions(options =>
-					options.Conventions.AuthorizeFolder("/Loans"))
-				.SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
+			services
+				.AddRazorPages()
+				.AddRazorPagesOptions(options => 
+					options.Conventions.AuthorizeFolder("/Loans"));
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app,
-			IHostingEnvironment env,
+			IWebHostEnvironment env,
 			UserManager<AppUser> userManager,
 			RoleManager<IdentityRole> roleManager,
 			IConfiguration configuration,
@@ -116,13 +115,20 @@ namespace PozyczkoPrzypominajkaV2
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
 
+			app.UseRouting();
+
+			app.UseAuthorization();
+
 			app.UseAuthentication();
+
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapRazorPages();
+			});
 
 			DBInitialization.InitRoles(roleManager);
 			DBInitialization.SeedAdminUsers(userManager, configuration);
 			DBInitialization.SeedUsers(userManager);
-
-			app.UseMvc();
 
 			var defaultCulture = new CultureInfo("pl-PL");
 			var localizationOptions = new RequestLocalizationOptions
