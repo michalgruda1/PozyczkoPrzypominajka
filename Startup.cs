@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -87,7 +86,7 @@ namespace PozyczkoPrzypominajkaV2
 			services.AddMvc()
 				.AddRazorPagesOptions(options =>
 					options.Conventions.AuthorizeFolder("/Loans"))
-				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+				.SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 		}
 
