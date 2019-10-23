@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Server.Kestrel.Core;
 using System.Net;
 
 namespace PozyczkoPrzypominajkaV2
 {
 	public class Program
 	{
+		IConfiguration config { get; }
+
 		public static void Main(string[] args)
 		{
 			CreateWebHostBuilder(args).Build().Run();
@@ -24,7 +19,9 @@ namespace PozyczkoPrzypominajkaV2
 			.UseStartup<Startup>()
 			.ConfigureKestrel((context, options) =>
 			{
-				options.Listen(IPAddress.Parse("185.238.75.231"), 5000);
+				var ip = context.Configuration.GetSection("Host").GetSection("Ip").Value;
+				var port = context.Configuration.GetSection("Host").GetSection("Port").Value;
+				options.Listen(IPAddress.Parse(ip), int.Parse(port));
 			});
 	}
 }

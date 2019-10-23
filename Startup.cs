@@ -1,23 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PozyczkoPrzypominajkaV2.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using PozyczkoPrzypominajka.Models;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using PozyczkoPrzypominajkaV2.Data;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
-using Microsoft.AspNetCore.Localization;
 
 namespace PozyczkoPrzypominajkaV2
 {
@@ -89,7 +85,7 @@ namespace PozyczkoPrzypominajkaV2
 			});
 
 			services.AddMvc()
-				.AddRazorPagesOptions(options => 
+				.AddRazorPagesOptions(options =>
 					options.Conventions.AuthorizeFolder("/Loans"))
 				.SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
