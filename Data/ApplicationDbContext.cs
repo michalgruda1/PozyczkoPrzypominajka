@@ -15,8 +15,8 @@ namespace PozyczkoPrzypominajkaV2.Data
 		{
 		}
 
-		public DbSet<Loan> Loans { get; set; }
-		public DbSet<Notification> Notifications { get; set; }
+		public DbSet<Loan> Loans { get; set; } = null!;
+		public DbSet<Notification> Notifications { get; set; } = null!;
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
