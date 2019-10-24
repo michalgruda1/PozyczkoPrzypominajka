@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -85,7 +84,7 @@ namespace PozyczkoPrzypominajkaV2
 
 			services
 				.AddRazorPages()
-				.AddRazorPagesOptions(options => 
+				.AddRazorPagesOptions(options =>
 					options.Conventions.AuthorizeFolder("/Loans"));
 		}
 

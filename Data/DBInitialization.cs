@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using PozyczkoPrzypominajka.Models;
 using System.Collections.Generic;
@@ -73,7 +72,8 @@ namespace PozyczkoPrzypominajkaV2.Data
 
 				var password = "Azerty1-";
 
-				list.ForEach(userItem => {
+				list.ForEach(userItem =>
+				{
 					var result = userManager.CreateAsync(userItem, password).Result;
 					if (result.Succeeded)
 					{
