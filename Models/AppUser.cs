@@ -5,9 +5,9 @@ namespace PozyczkoPrzypominajka.Models
 	public class AppUser : IdentityUser
 	{
 		[PersonalData]
-		public string Imie { get; set; }
+		public string Imie { get; set; } = "Gall";
 		[PersonalData]
-		public string Nazwisko { get; set; }
+		public string Nazwisko { get; set; } = "Anonim";
 
 		public override string ToString()
 		{
