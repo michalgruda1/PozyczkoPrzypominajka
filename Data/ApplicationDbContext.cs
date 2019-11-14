@@ -20,6 +20,7 @@ namespace PozyczkoPrzypominajkaV2.Data
 
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
+			builder.Entity<Loan>().HasKey(l => l.LoanID);
 			builder.Entity<Loan>().Property(l => l.Date).IsRequired();
 			builder.Entity<Loan>().HasOne(l => l.Giver).WithMany().IsRequired().HasForeignKey("GiverID");
 			builder.Entity<Loan>().HasOne(l => l.Receiver).WithMany().IsRequired().HasForeignKey("ReceiverID");
@@ -30,7 +31,7 @@ namespace PozyczkoPrzypominajkaV2.Data
 			builder.Entity<Loan>().HasMany<Notification>().WithOne(n => n.Loan).HasForeignKey(n => n.LoanID).OnDelete(DeleteBehavior.Cascade).IsRequired();
 
 			builder.Entity<Notification>().Property(n => n.When).IsRequired();
-			builder.Entity<Notification>().Property(n => n.Text).IsRequired();
+			builder.Entity<Notification>().Property(n => n.Message).IsRequired();
 			builder.Entity<Notification>().Property(n => n.Channel).IsRequired().HasConversion<int>();
 			builder.Entity<Notification>().HasOne(n => n.Loan).WithMany(l => l.Notifications).HasForeignKey(p => p.LoanID);
 
