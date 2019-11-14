@@ -6,7 +6,7 @@ namespace PozyczkoPrzypominajka.Models
 {
 	public class Loan
 	{
-		public int LoanID { get; set; }
+		public int? LoanID { get; set; }
 
 		[Display(Name = "Udzielenie"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:d}")]
 		public DateTime Date { get; set; }
@@ -55,5 +55,31 @@ namespace PozyczkoPrzypominajka.Models
 		public StatusEnum Status { get; set; }
 
 		public ICollection<Notification> Notifications { get; set; }
+
+		public Loan(
+			int? loanID,
+			DateTime date,
+			string giverID,
+			AppUser giver,
+			string receiverID, 
+			AppUser receiver,
+			decimal amount, 
+			DateTime repaymentDate, 
+			decimal repaymentAmount,
+			StatusEnum status,
+			ICollection<Notification> notifications)
+		{
+			LoanID = loanID;
+			Date = date;
+			GiverID = giverID;
+			Giver = giver;
+			ReceiverID = receiverID;
+			Receiver = receiver;
+			Amount = amount;
+			RepaymentDate = repaymentDate;
+			RepaymentAmount = repaymentAmount;
+			Status = status;
+			Notifications = notifications;
+		}
 	}
 }
