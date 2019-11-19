@@ -54,7 +54,7 @@ namespace PozyczkoPrzypominajkaV2.Areas.Identity.Pages.Account.Manage
 			public string Email { get; set; }
 
 			[Phone]
-			[Display(Name = "Phone number")]
+			[Display(Name = "Telefon")]
 			public string PhoneNumber { get; set; }
 		}
 
