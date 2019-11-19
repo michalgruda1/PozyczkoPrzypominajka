@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
 using PozyczkoPrzypominajkaV2.Models.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PozyczkoPrzypominajkaV2.Pages.Loans
 {
@@ -40,14 +36,16 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			var ret = await _context.Loans
 				.Where(l =>
 					l.Receiver.Id == currentUser.Id
-					&& l.Status != StatusEnum.Paid)
+					&& l.Status != StatusEnum.Unpaid)
 				.Select(l =>
 					new LoanViewModel
 					{
 						LoanID = l.LoanID,
 						Date = l.Date,
-						Giver = l.Giver.ToString(),
-						Receiver = l.Receiver.ToString(),
+						GiverId = l.GiverID,
+						GiverName = l.Giver.ToString(),
+						ReceiverId = l.ReceiverID,
+						ReceiverName = l.Receiver.ToString(),
 						Amount = l.Amount,
 						RepaymentDate = l.RepaymentDate,
 						RepaymentAmount = l.RepaymentAmount,
@@ -66,7 +64,7 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 		private async Task<IList<LoanViewModel>> GetLoansGivenUnpaid(AppUser currentUser)
 		{
 			var ret = await _context.Loans
-				.Where(l => 
+				.Where(l =>
 					l.Giver.Id == currentUser.Id
 					&& l.Status != StatusEnum.Paid)
 				.Select(l =>
@@ -74,8 +72,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 					{
 						LoanID = l.LoanID,
 						Date = l.Date,
-						Giver = l.Giver.ToString(),
-						Receiver = l.Receiver.ToString(),
+						GiverName = l.Giver.ToString(),
+						ReceiverName = l.Receiver.ToString(),
 						Amount = l.Amount,
 						RepaymentDate = l.RepaymentDate,
 						RepaymentAmount = l.RepaymentAmount,

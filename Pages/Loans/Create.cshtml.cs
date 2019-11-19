@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
+using PozyczkoPrzypominajkaV2.Models.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace PozyczkoPrzypominajkaV2.Pages.Loans
 {
@@ -27,22 +28,20 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 		public Loan Loan { get; set; }
 
 		[BindProperty]
-		public string Receiver { get; set; }
+		public LoanViewModel LoanView { get; set; }
+
+		[BindProperty]
+		public Guid? Receiver { get; set; }
 
 		[BindProperty]
 		public List<SelectListItem> Receivers { get; set; }
 
 		public async Task<IActionResult> OnGetAsync()
 		{
-			Loan = new Loan();
 			var currentUser = await userManager.GetUserAsync(User);
-			Loan.Giver = currentUser;
-			Receivers = await InitReceivers(currentUser, selected: null);
-			Loan.Date = DateTime.Now;
-			Loan.RepaymentDate = DateTime.Now + TimeSpan.FromDays(7);
-
+			
 			return Page();
-		}		
+		}
 
 		public async Task<IActionResult> OnPostAsync()
 		{
@@ -51,7 +50,7 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 				return Page();
 			}
 			var currentUser = await userManager.GetUserAsync(User);
-			Loan.GiverID = currentUser.Id;
+			Loan.GiverID = Guid.Parse(currentUser.Id);
 			context.Loans.Add(Loan);
 			await context.SaveChangesAsync();
 
@@ -74,7 +73,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 
 			var ret = new List<SelectListItem>();
 
-			receivers.ForEach(user => {
+			receivers.ForEach(user =>
+			{
 				if (selected != null && user.id == selected)
 				{
 					ret.Add(new SelectListItem(user.user, user.id, selected: true));

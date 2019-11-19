@@ -11,12 +11,12 @@ namespace PozyczkoPrzypominajka.Models
 		[Display(Name = "Udzielenie"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:d}")]
 		public DateTime Date { get; set; }
 
-		public string GiverID { get; set; }
+		public Guid GiverID { get; set; }
 
 		[Display(Name = "Udzielający"), DataType(DataType.Text)]
 		public AppUser Giver { get; set; }
 
-		public string ReceiverID { get; set; }
+		public Guid ReceiverID { get; set; }
 
 		[Display(Name = "Biorący"), DataType(DataType.Text)]
 		public AppUser Receiver { get; set; }
@@ -59,9 +59,9 @@ namespace PozyczkoPrzypominajka.Models
 		public Loan(
 			int? loanID,
 			DateTime date,
-			string giverID,
+			Guid giverID,
 			AppUser giver,
-			string receiverID, 
+			Guid receiverID, 
 			AppUser receiver,
 			decimal amount, 
 			DateTime repaymentDate, 

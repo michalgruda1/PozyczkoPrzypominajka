@@ -5,16 +5,22 @@ namespace PozyczkoPrzypominajkaV2.Models.ViewModels
 {
 	public class LoanViewModel
 	{
-		public int LoanID { get; set; }
+		public int? LoanID { get; set; }
 
 		[Display(Name = "Udzielenie"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:d}")]
 		public DateTime Date { get; set; }
 
+		[Display(AutoGenerateField = false)]
+		public Guid GiverId { get; set; }
+
 		[Display(Name = "Udzielający"), DataType(DataType.Text)]
-		public string Giver { get; set; }
+		public string? GiverName { get; set; }
+
+		[Display(AutoGenerateField = false)]
+		public Guid ReceiverId { get; set; }
 
 		[Display(Name = "Biorący"), DataType(DataType.Text)]
-		public string Receiver { get; set; }
+		public string? ReceiverName { get; set; }
 
 		[Display(Name = "Kwota pożyczki"), DataType(DataType.Currency), DisplayFormat(DataFormatString = "{0:C2}")]
 		public decimal Amount { get; set; }
