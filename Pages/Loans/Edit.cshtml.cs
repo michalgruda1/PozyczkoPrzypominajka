@@ -74,8 +74,10 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			return RedirectToPage("./Index");
 		}
 
-		private bool LoanExists(int id)
+		private bool LoanExists(int? id)
 		{
+			if (!id.HasValue) throw new ArgumentNullException();
+
 			return context.Loans.Any(e => e.LoanID == id);
 		}
 	}
