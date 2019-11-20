@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace PozyczkoPrzypominajka.Models
 {
@@ -10,6 +10,9 @@ namespace PozyczkoPrzypominajka.Models
 		public DateTime When { get; set; }
 		public string Message { get; set; }
 		public ChannelEnum Channel { get; set; }
+
+		// for ORM use only
+		private Notification () { }
 
 		public Notification(int notificationID, int loanID, Loan loan, DateTime when, string message, ChannelEnum channel)
 		{

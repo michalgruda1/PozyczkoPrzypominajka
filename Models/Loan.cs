@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -54,7 +54,10 @@ namespace PozyczkoPrzypominajka.Models
 
 		public StatusEnum Status { get; set; }
 
-		public ICollection<Notification> Notifications { get; set; }
+		public ICollection<Notification>? Notifications { get; set; }
+
+		// for ORM use only
+		private Loan() { }
 
 		public Loan(
 			int? loanID,
