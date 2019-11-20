@@ -6,6 +6,7 @@
     <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
     <UserSecretsId>aspnet-PozyczkoPrzypominajkaV2-CCAC13A4-CA66-40BE-A2EA-12C5FB6ECA55</UserSecretsId>
     <IdentityUIFrameworkVersion>Bootstrap4</IdentityUIFrameworkVersion>
+    <AssemblyName>PozyczkoPrzypominajka</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
