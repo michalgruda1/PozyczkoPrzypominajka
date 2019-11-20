@@ -34,42 +34,16 @@ namespace PozyczkoPrzypominajkaV2.Areas.Identity.Pages.Account
 		}
 
 		[BindProperty]
-		public InputModel Input { get; set; }
+		public RegisterInputVM Input { get; set; }
 
 		public string? ReturnUrl { get; set; }
 
-		public class InputModel
+		public void OnGet(string? returnUrl = null)
 		{
-			[Required]
-			[Display(Name = "Imię")]
-			public string Imie { get; set; }
-
-			[Required]
-			public string Nazwisko { get; set; }
-
-			[Required]
-			[EmailAddress]
-			[Display(Name = "Email")]
-			public string Email { get; set; }
-
-			[Required]
-			[StringLength(100, ErrorMessage = "{0} musi mieć przynajmniej {2} znaków i maksymalnie {1} znków.", MinimumLength = 6)]
-			[DataType(DataType.Password)]
-			[Display(Name = "Hasło")]
-			public string Password { get; set; }
-
-			[DataType(DataType.Password)]
-			[Display(Name = "Potwierdzenie hasła")]
-			[Compare("Password", ErrorMessage = "Hasło oraz Potwierdzenie hasła są inne.")]
-			public string ConfirmPassword { get; set; }
+			ReturnUrl = returnUrl ?? Url.Content("~/");
 		}
 
-		public void OnGet(string returnUrl = null)
-		{
-			ReturnUrl = returnUrl;
-		}
-
-		public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+		public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
 		{
 			returnUrl = returnUrl ?? Url.Content("~/");
 			if (ModelState.IsValid)
