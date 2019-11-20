@@ -17,12 +17,12 @@ namespace PozyczkoPrzypominajka.Models
 		public string GiverID { get; set; }
 
 		[Display(Name = "Udzielający"), DataType(DataType.Text)]
-		public AppUser? Giver { get; set; }
+		public AppUser Giver { get; set; }
 
 		public string ReceiverID { get; set; }
 
 		[Display(Name = "Biorący"), DataType(DataType.Text)]
-		public AppUser? Receiver { get; set; }
+		public AppUser Receiver { get; set; }
 
 		[Display(Name = "Kwota pożyczki"),
 			Range(0.01D, 999_999_999.9999D),
