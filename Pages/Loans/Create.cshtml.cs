@@ -50,7 +50,7 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 				return Page();
 			}
 			var currentUser = await userManager.GetUserAsync(User);
-			Loan.GiverID = Guid.Parse(currentUser.Id);
+			Loan.GiverID = currentUser.Id;
 			context.Loans.Add(Loan);
 			await context.SaveChangesAsync();
 

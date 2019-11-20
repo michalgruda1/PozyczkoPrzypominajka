@@ -11,13 +11,13 @@ namespace PozyczkoPrzypominajkaV2.Models.ViewModels
 		public DateTime Date { get; set; }
 
 		[Display(AutoGenerateField = false)]
-		public Guid GiverId { get; set; }
+		public string GiverId { get; set; }
 
 		[Display(Name = "Udzielający"), DataType(DataType.Text)]
 		public string? GiverName { get; set; }
 
 		[Display(AutoGenerateField = false)]
-		public Guid ReceiverId { get; set; }
+		public string ReceiverId { get; set; }
 
 		[Display(Name = "Biorący"), DataType(DataType.Text)]
 		public string? ReceiverName { get; set; }

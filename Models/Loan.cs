@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -11,15 +11,18 @@ namespace PozyczkoPrzypominajka.Models
 		[Display(Name = "Udzielenie"), DataType(DataType.Date), DisplayFormat(DataFormatString = "{0:d}")]
 		public DateTime Date { get; set; }
 
-		public Guid GiverID { get; set; }
+		// Zastosowanie prawidłowego typu danych Guid daje błąd:
+		// InvalidOperationException: The relationship from 'Loan.Giver' to 'AppUser' with foreign key properties {'GiverID' : Guid} cannot target the primary key {'Id' : string} because it is not compatible. Configure a principal key or a set of compatible foreign key properties for this relationship.
+		// którego nie udało się rozwiązać via FluentAPI - HasConversion<string>()
+		public string GiverID { get; set; }
 
 		[Display(Name = "Udzielający"), DataType(DataType.Text)]
-		public AppUser Giver { get; set; }
+		public AppUser? Giver { get; set; }
 
-		public Guid ReceiverID { get; set; }
+		public string ReceiverID { get; set; }
 
 		[Display(Name = "Biorący"), DataType(DataType.Text)]
-		public AppUser Receiver { get; set; }
+		public AppUser? Receiver { get; set; }
 
 		[Display(Name = "Kwota pożyczki"),
 			Range(0.01D, 999_999_999.9999D),
@@ -62,9 +65,9 @@ namespace PozyczkoPrzypominajka.Models
 		public Loan(
 			int? loanID,
 			DateTime date,
-			Guid giverID,
+			string giverID,
 			AppUser giver,
-			Guid receiverID, 
+			string receiverID, 
 			AppUser receiver,
 			decimal amount, 
 			DateTime repaymentDate, 
