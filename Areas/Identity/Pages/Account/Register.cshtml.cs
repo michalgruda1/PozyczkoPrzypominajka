@@ -36,7 +36,7 @@ namespace PozyczkoPrzypominajkaV2.Areas.Identity.Pages.Account
 		[BindProperty]
 		public InputModel Input { get; set; }
 
-		public string ReturnUrl { get; set; }
+		public string? ReturnUrl { get; set; }
 
 		public class InputModel
 		{
@@ -53,14 +53,14 @@ namespace PozyczkoPrzypominajkaV2.Areas.Identity.Pages.Account
 			public string Email { get; set; }
 
 			[Required]
-			[StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+			[StringLength(100, ErrorMessage = "{0} musi mieć przynajmniej {2} znaków i maksymalnie {1} znków.", MinimumLength = 6)]
 			[DataType(DataType.Password)]
-			[Display(Name = "Password")]
+			[Display(Name = "Hasło")]
 			public string Password { get; set; }
 
 			[DataType(DataType.Password)]
-			[Display(Name = "Confirm password")]
-			[Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+			[Display(Name = "Potwierdzenie hasła")]
+			[Compare("Password", ErrorMessage = "Hasło oraz Potwierdzenie hasła są inne.")]
 			public string ConfirmPassword { get; set; }
 		}
 
