@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
+using PozyczkoPrzypominajkaV2.Services;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -43,9 +45,11 @@ namespace PozyczkoPrzypominajkaV2
 					}
 			));
 
-			services.AddIdentity<AppUser, IdentityRole>()
+			services
+				.AddIdentity<AppUser, IdentityRole>()
 				.AddEntityFrameworkStores<ApplicationDbContext>()
-				.AddDefaultTokenProviders();
+				.AddDefaultTokenProviders()
+				.AddDefaultUI();
 
 			services.Configure<IdentityOptions>(options =>
 			{
@@ -82,6 +86,8 @@ namespace PozyczkoPrzypominajkaV2
 				options.SlidingExpiration = true;
 			});
 
+			services.AddTransient<IEmailSender, EmailSender>();
+
 			services
 				.AddRazorPages()
 				.AddRazorPagesOptions(options =>
@@ -112,14 +118,10 @@ namespace PozyczkoPrzypominajkaV2
 
 			app.UseHttpsRedirection();
 			app.UseStaticFiles();
-			app.UseCookiePolicy();
 
 			app.UseRouting();
-
-			app.UseAuthorization();
-
 			app.UseAuthentication();
-
+			app.UseAuthorization();
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapRazorPages();
