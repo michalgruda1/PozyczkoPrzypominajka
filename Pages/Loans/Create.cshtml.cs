@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
-using PozyczkoPrzypominajkaV2.Models.ViewModels;
+using PozyczkoPrzypominajkaV2.Models.Loan;
+using PozyczkoPrzypominajkaV2.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,31 +14,38 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 {
 	public class CreateModel : PageModel
 	{
-		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager)
+		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager, IEnvironment environment)
 		{
 			this.context = context;
 			this.userManager = userManager;
+			this.environment = environment;
 		}
 
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<AppUser> userManager;
+		private readonly IEnvironment environment;
+
+		public LoanViewModel LoanVM { get; set; }
 
 		[BindProperty]
-		public Loan Loan { get; set; }
-
-		[BindProperty]
-		public LoanViewModel LoanView { get; set; }
-
-		[BindProperty]
-		public Guid? Receiver { get; set; }
-
-		[BindProperty]
-		public List<SelectListItem> Receivers { get; set; }
+		public LoanInputModel LoanIM { get; set; }
 
 		public async Task<IActionResult> OnGetAsync()
 		{
-			var currentUser = await userManager.GetUserAsync(User);
-			
+			var me = await userManager.GetUserAsync(User);
+			LoanVM.Amount = 0;
+			LoanVM.Date = environment.Now();
+			LoanVM.GiverId = me.Id;
+			LoanVM.GiverName = me.ToString();
+			LoanVM.Amount = 0;
+
+			var receivers = await context.Users
+					.AsNoTracking()
+					.Select(u => new Tuple<string, string>(u.Id, u.ToString()))
+					.ToListAsync();
+
+			LoanVM.Init(receivers);
+
 			return Page();
 		}
 
@@ -48,44 +54,30 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			if (!ModelState.IsValid)
 			{
 				return Page();
+			} 
+			else
+			{
+				var giver = await userManager.FindByIdAsync(LoanIM.GiverID);
+				var receiver = await userManager.FindByIdAsync(LoanIM.ReceiverID);
+
+				var newLoan = new Loan(
+					loanID: null,
+					date: LoanIM.DisbursementDate,
+					giverID: giver.Id.ToString(),
+					giver: giver,
+					receiverID: receiver.Id,
+					receiver: receiver,
+					amount: LoanIM.Amount,
+					repaymentDate: LoanIM.RepaymentDate,
+					repaymentAmount: LoanIM.RepaymentAmount,
+					status: LoanIM.Status,
+					notifications: null);
+
+				context.Loans.Add(newLoan);
+				await context.SaveChangesAsync();
 			}
-			var currentUser = await userManager.GetUserAsync(User);
-			Loan.GiverID = currentUser.Id;
-			context.Loans.Add(Loan);
-			await context.SaveChangesAsync();
 
 			return RedirectToPage("./Index");
-		}
-
-		private async Task<List<SelectListItem>> InitReceivers(AppUser currentUser, string selected)
-		{
-			var receivers = await context.Users
-				.Where(u =>
-					u.Id != currentUser.Id)
-				.Select(u =>
-					new
-					{
-						id = u.Id,
-						user = u.ToString()
-					})
-				.AsNoTracking()
-				.ToListAsync();
-
-			var ret = new List<SelectListItem>();
-
-			receivers.ForEach(user =>
-			{
-				if (selected != null && user.id == selected)
-				{
-					ret.Add(new SelectListItem(user.user, user.id, selected: true));
-				}
-				else
-				{
-					ret.Add(new SelectListItem(user.user, user.id, selected: false));
-				}
-			});
-
-			return ret;
 		}
 	}
 }
