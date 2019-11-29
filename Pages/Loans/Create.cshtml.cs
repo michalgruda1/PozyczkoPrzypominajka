@@ -7,7 +7,6 @@ using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
 using PozyczkoPrzypominajkaV2.Models.Loan;
 using PozyczkoPrzypominajkaV2.Services;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,8 +15,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 	public class CreateModel : PageModel
 	{
 		[BindProperty]
-		public LoanEditModel LoanIM { get; set; }
-		public LoanViewModel LoanVM { get; set; }
+		public LoanEditModel LoanEM { get; set; } = new LoanEditModel() { };
+		public LoanViewModel LoanVM { get; set; } = new LoanViewModel() { };
 
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<AppUser> userManager;
@@ -39,7 +38,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			LoanVM.DisbursementDate = environment.Now();
 			LoanVM.GiverList = await context.Users.AsNoTracking()
 				.Where(u => u.Id == me.Id) // tylko zalogowany user jest na liście 
-				.Select(u => new SelectListItem() {
+				.Select(u => new SelectListItem()
+				{
 					Text = u.ToString(),
 					Value = u.Id,
 					Selected = u.Id == me.Id, // zalogowany user jest wybrany
@@ -63,22 +63,22 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			if (!ModelState.IsValid)
 			{
 				return Page();
-			} 
+			}
 			else
 			{
-				var giver = await userManager.FindByIdAsync(LoanIM.GiverId);
-				var receiver = await userManager.FindByIdAsync(LoanIM.ReceiverId);
+				var giver = await userManager.FindByIdAsync(LoanEM.GiverId);
+				var receiver = await userManager.FindByIdAsync(LoanEM.ReceiverId);
 
 				var newLoan = new Loan(
 					loanID: null,
-					date: LoanIM.DisbursementDate,
+					date: LoanEM.DisbursementDate,
 					giverID: giver.Id.ToString(),
 					giver: giver,
 					receiverID: receiver.Id,
 					receiver: receiver,
-					amount: LoanIM.Amount,
-					repaymentDate: LoanIM.RepaymentDate,
-					repaymentAmount: LoanIM.RepaymentAmount,
+					amount: LoanEM.Amount,
+					repaymentDate: LoanEM.RepaymentDate,
+					repaymentAmount: LoanEM.RepaymentAmount,
 					status: StatusEnum.Unpaid,
 					notifications: null);
 
