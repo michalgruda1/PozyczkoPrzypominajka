@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
@@ -14,6 +15,14 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 {
 	public class CreateModel : PageModel
 	{
+		[BindProperty]
+		public LoanEditModel LoanIM { get; set; }
+		public LoanViewModel LoanVM { get; set; }
+
+		private readonly ApplicationDbContext context;
+		private readonly UserManager<AppUser> userManager;
+		private readonly IEnvironment environment;
+
 		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager, IEnvironment environment)
 		{
 			this.context = context;
@@ -21,30 +30,30 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			this.environment = environment;
 		}
 
-		private readonly ApplicationDbContext context;
-		private readonly UserManager<AppUser> userManager;
-		private readonly IEnvironment environment;
-
-		public LoanViewModel LoanVM { get; set; }
-
-		[BindProperty]
-		public LoanInputModel LoanIM { get; set; }
-
 		public async Task<IActionResult> OnGetAsync()
 		{
 			var me = await userManager.GetUserAsync(User);
-			LoanVM.Amount = 0;
-			LoanVM.Date = environment.Now();
-			LoanVM.GiverId = me.Id;
-			LoanVM.GiverName = me.ToString();
-			LoanVM.Amount = 0;
+			var receivers = context.Users.Select(u => u.Id != me.Id);
 
-			var receivers = await context.Users
-					.AsNoTracking()
-					.Select(u => new Tuple<string, string>(u.Id, u.ToString()))
-					.ToListAsync();
-
-			LoanVM.Init(receivers);
+			LoanVM.Amount = 0;
+			LoanVM.DisbursementDate = environment.Now();
+			LoanVM.GiverList = await context.Users.AsNoTracking()
+				.Where(u => u.Id == me.Id) // tylko zalogowany user jest na liście 
+				.Select(u => new SelectListItem() {
+					Text = u.ToString(),
+					Value = u.Id,
+					Selected = u.Id == me.Id, // zalogowany user jest wybrany
+				})
+				.ToListAsync();
+			LoanVM.ReceiverList = await context.Users.AsNoTracking()
+				.Where(u => u.Id != me.Id) // wszyscy prócz zalogowanego są na liście
+				.Select(u => new SelectListItem()
+				{
+					Text = u.ToString(),
+					Value = u.Id
+				})
+				.ToListAsync();
+			LoanVM.Amount = 0;
 
 			return Page();
 		}
@@ -57,8 +66,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			} 
 			else
 			{
-				var giver = await userManager.FindByIdAsync(LoanIM.GiverID);
-				var receiver = await userManager.FindByIdAsync(LoanIM.ReceiverID);
+				var giver = await userManager.FindByIdAsync(LoanIM.GiverId);
+				var receiver = await userManager.FindByIdAsync(LoanIM.ReceiverId);
 
 				var newLoan = new Loan(
 					loanID: null,
@@ -70,7 +79,7 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 					amount: LoanIM.Amount,
 					repaymentDate: LoanIM.RepaymentDate,
 					repaymentAmount: LoanIM.RepaymentAmount,
-					status: LoanIM.Status,
+					status: StatusEnum.Unpaid,
 					notifications: null);
 
 				context.Loans.Add(newLoan);

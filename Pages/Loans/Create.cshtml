@@ -14,42 +14,49 @@
 		<form method="post">
 			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
 			<div class="form-group">
-				<label asp-for="LoanVM.GiverName" class="control-label"></label>
-				<input value="@Model.LoanVM.GiverName" class="form-control" readonly />
-				<input type="hidden" asp-for="LoanIM.GiverID" value="@Model.LoanVM.GiverId" />
-				<span asp-validation-for="LoanIM.GiverID" class="text-danger"></span>
+				<label asp-for="LoanVM.GiverList" class="control-label"></label>
+				<select asp-items="@Model.LoanVM.GiverList" asp-for="@Model.LoanIM" class="form-control" readonly>
+				</select>
+				<span asp-validation-for="LoanVM.GiverList" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="LoanVM.Receivers" class="control-label"></label>
-				<select asp-for="LoanIM.ReceiverID" asp-items="@Model.LoanVM.Receivers" class="form-control">
+				<label asp-for="LoanVM.ReceiverList" class="control-label"></label>
+				<select asp-items="@Model.LoanVM.ReceiverList" asp-for="LoanIM.ReceiverId" class="form-control">
 					<option value="">Wybierz...</option>
 				</select>
-				<span asp-validation-for="LoanIM.ReceiverID" class="text-danger"></span>
+				<span asp-validation-for="LoanVM.ReceiverList" class="text-danger"></span>
 			</div>
 			<div class="form-group">
-				<label asp-for="LoanVM.Date" class="control-label"></label>
+				<label asp-for="LoanVM.DisbursementDate" class="control-label"></label>
 				<input asp-for="LoanIM.DisbursementDate" class="form-control" />
 				<span asp-validation-for="LoanIM.DisbursementDate" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.Amount" class="control-label"></label>
 				<input asp-for="LoanIM.Amount" class="form-control" />
-				<span asp-validation-for="LoanIM.Amount" class="text-danger"></span>
+				<span asp-validation-for="LoanVM.Amount" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.RepaymentDate" class="control-label"></label>
 				<input asp-for="LoanIM.RepaymentDate" class="form-control" />
-				<span asp-validation-for="LoanIM.RepaymentDate" class="text-danger"></span>
+				<span asp-validation-for="LoanVM.RepaymentDate" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.RepaymentAmount" class="control-label"></label>
 				<input asp-for="LoanIM.RepaymentAmount" class="form-control" />
-				<span asp-validation-for="LoanIM.RepaymentAmount" class="text-danger"></span>
+				<span asp-validation-for="LoanVM.RepaymentAmount" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.Interest" class="control-label"></label>
+				@* For display only, interest is calculated basing on loan data*@
 				<input asp-for="LoanVM.Interest" class="form-control" readonly />
 			</div>
+			<div class="form-group">
+				<label asp-for="LoanVM.Status" class="control-label"></label>
+				<input asp-for="LoanIM.Status" class="form-control" readonly />
+				<span asp-validation-for="LoanVM.Status" class="text-danger"></span>
+			</div>
+
 			<div class="form-group">
 				<input type="submit" value="Create" class="btn btn-primary" />
 			</div>

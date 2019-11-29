@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace PozyczkoPrzypominajka.Models
 {
 	public class Loan
 	{
+		// nullowalne tylko dla tworzenia nowej pożyczki
 		public int? LoanID { get; set; }
 
 		public DateTime Date { get; set; }
@@ -52,10 +52,10 @@ namespace PozyczkoPrzypominajka.Models
 			DateTime date,
 			string giverID,
 			AppUser giver,
-			string receiverID, 
+			string receiverID,
 			AppUser receiver,
-			decimal amount, 
-			DateTime repaymentDate, 
+			decimal amount,
+			DateTime repaymentDate,
 			decimal repaymentAmount,
 			StatusEnum status,
 			ICollection<Notification>? notifications)

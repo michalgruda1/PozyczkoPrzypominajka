@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
 using PozyczkoPrzypominajkaV2.Models.Loan;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,8 +23,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			this.userManager = userManager;
 		}
 
-		public IList<LoanViewModel> LoansGivenUnpaid { get; set; }
-		public IList<LoanViewModel> LoansTakenUnpaid { get; set; }
+		public IList<LoanViewModel> LoansGivenUnpaid { get; set; } = new List<LoanViewModel>();
+		public IList<LoanViewModel> LoansTakenUnpaid { get; set; } = new List<LoanViewModel>();
 
 		public async Task OnGetAsync()
 		{
@@ -33,59 +35,100 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 
 		private async Task<IList<LoanViewModel>> GetLoansTakenUnpaid(AppUser currentUser)
 		{
-			var ret = await context.Loans
+			var receivers = await context.Users
+				.AllAsync(u => u.Id != currentUser.Id);
+
+			var loans = await context.Loans
 				.Where(l =>
-					l.Receiver.Id == currentUser.Id
+					l.Receiver.Id == currentUser.Id // Aktualny user jest biorącym pożyczkę
 					&& l.Status != StatusEnum.Unpaid)
-				.Select(l =>
-					new LoanViewModel(
-						loanId: l.LoanID,
-						date: l.Date,
-						giverName: l.Giver.ToString(),
-						giverId: l.GiverID,
-						receivers: null, // bo nie ma metody w konstruktorze, tylko jest wypełnianie przez Init()
-						amount: l.Amount,
-						repaymentDate: l.RepaymentDate,
-						repaymentAmount: l.RepaymentAmount,
-						interest: l.Interest,
-						status: l.Status.ToString()
-						))
 				.AsNoTracking()
 				.ToListAsync();
 
-				ret.OrderByDescending(l => l.Status)
-					.ThenByDescending(l => l.RepaymentDate);
+			var loansVM = new List<LoanViewModel>();
 
-			return ret;
+			foreach (var loan in loans)
+			{
+				var giverTuple = (text: loan.Giver.ToString(), value: loan.GiverID);
+				var giverAsList = new List<Tuple<string, string>>();
+				giverAsList.Add(giverTuple.ToTuple());
+				var giver = new SelectList(giverAsList, loan.GiverID);
 
+				var receiverTuple = (text: loan.Giver.ToString(), value: loan.GiverID);
+				var receiverAsList = new List<Tuple<string, string>>();
+				receiverAsList.Add(receiverTuple.ToTuple());
+				var receiver = new SelectList(receiverAsList, loan.GiverID);
+
+				// TODO tyle roboty na selecty? Może da się to uprościć?
+
+				loansVM.Add(
+					new LoanViewModel()
+					{
+						LoanId = loan.LoanID ?? throw new ArgumentNullException(), // To się nie powinno wydarzyć
+						GiverList = giver.ToList(),
+						ReceiverList = receiver.ToList(),
+						DisbursementDate = loan.Date,
+						Amount = loan.Amount,
+						RepaymentDate = loan.RepaymentDate,
+						RepaymentAmount = loan.RepaymentAmount,
+						Interest = loan.Interest,
+						Status = loan.Status
+					});
+			};
+
+			loansVM.OrderByDescending(l => l.Status)
+				.ThenByDescending(l => l.RepaymentDate);
+
+			return loansVM;
 		}
 
 		private async Task<IList<LoanViewModel>> GetLoansGivenUnpaid(AppUser currentUser)
 		{
-			var ret = await context.Loans
+			var receivers = await context.Users
+				.AllAsync(u => u.Id != currentUser.Id);
+
+			var loans = await context.Loans
 				.Where(l =>
-					l.Giver.Id == currentUser.Id
-					&& l.Status != StatusEnum.Paid)
-				.Select(l =>
-					new LoanViewModel
-					{
-						LoanID = l.LoanID,
-						Date = l.Date,
-						GiverName = l.Giver.ToString(),
-						ReceiverName = l.Receiver.ToString(),
-						Amount = l.Amount,
-						RepaymentDate = l.RepaymentDate,
-						RepaymentAmount = l.RepaymentAmount,
-						Interest = l.Interest,
-						Status = l.Status.ToString(),
-					})
+					l.Giver.Id == currentUser.Id // Dający to aktualny użytkownik
+					&& l.Status != StatusEnum.Unpaid)
 				.AsNoTracking()
 				.ToListAsync();
 
-			ret.OrderByDescending(l => l.Status)
+			var loansVM = new List<LoanViewModel>();
+
+			foreach (var loan in loans)
+			{
+				var giverTuple = (text: loan.Giver.ToString(), value: loan.GiverID);
+				var giverAsList = new List<Tuple<string, string>>();
+				giverAsList.Add(giverTuple.ToTuple());
+				var giver = new SelectList(giverAsList, loan.GiverID);
+
+				var receiverTuple = (text: loan.Giver.ToString(), value: loan.GiverID);
+				var receiverAsList = new List<Tuple<string, string>>();
+				receiverAsList.Add(receiverTuple.ToTuple());
+				var receiver = new SelectList(receiverAsList, loan.GiverID);
+
+				// TODO tyle roboty na selecty? Może da się to uprościć?
+
+				loansVM.Add(
+					new LoanViewModel()
+					{
+						LoanId = loan.LoanID ?? throw new ArgumentNullException(), // To się nie powinno wydarzyć
+						GiverList = giver.ToList(),
+						ReceiverList = receiver.ToList(),
+						DisbursementDate = loan.Date,
+						Amount = loan.Amount,
+						RepaymentDate = loan.RepaymentDate,
+						RepaymentAmount = loan.RepaymentAmount,
+						Interest = loan.Interest,
+						Status = loan.Status
+					});
+			};
+
+			loansVM.OrderByDescending(l => l.Status)
 				.ThenByDescending(l => l.RepaymentDate);
 
-			return ret;
+			return loansVM;
 		}
 	}
 }

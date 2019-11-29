@@ -15,16 +15,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Date)
+                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].DisbursementDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].GiverName)
+                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].GiverList)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].ReceiverName)
+                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].ReceiverList)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Amount)
@@ -47,16 +47,16 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Date)
+                    @Html.DisplayFor(modelItem => item.DisbursementDate)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GiverName)
+                    @Html.DisplayFor(modelItem => item.GiverList.Where(u => u.Selected == true).Select(u => u.Text).SingleOrDefault())
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.ReceiverName)
+                    @Html.DisplayFor(modelItem => item.GiverList.Where(u => u.Selected == true).Select(u => u.Text).SingleOrDefault())
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Amount)
@@ -71,9 +71,9 @@
                     @Html.DisplayFor(modelItem => item.Interest)
                 </td>
                 <td>
-                    <a asp-page="./Edit" asp-route-id="@item.LoanID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.LoanID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.LoanID">Delete</a>
+                    <a asp-page="./Edit" asp-route-id="@item.LoanId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.LoanId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.LoanId">Delete</a>
                 </td>
             </tr>
         }
@@ -85,16 +85,16 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Date)
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].DisbursementDate)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Status)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].GiverName)
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].GiverList)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].ReceiverName)
+                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].ReceiverList)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Amount)
@@ -115,37 +115,37 @@
     <tbody>
         @foreach (var item in Model.LoansGivenUnpaid)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GiverName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReceiverName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RepaymentDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RepaymentAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Interest)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.LoanID">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.LoanID">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.LoanID">Delete</a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisbursementDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiverList.Where(u => u.Selected == true).Select(u => u.Text).SingleOrDefault())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GiverList.Where(u => u.Selected == true).Select(u => u.Text).SingleOrDefault())
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepaymentDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RepaymentAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Interest)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.LoanId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.LoanId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.LoanId">Delete</a>
+            </td>
+        </tr>
         }
     </tbody>
 </table>
