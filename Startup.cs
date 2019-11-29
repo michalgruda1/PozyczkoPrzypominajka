@@ -83,11 +83,11 @@ namespace PozyczkoPrzypominajkaV2
 			{
 				// Cookie settings
 				options.Cookie.HttpOnly = true;
-				options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-
+				options.ExpireTimeSpan = TimeSpan.FromDays(14);
+				options.SlidingExpiration = true;
 				options.LoginPath = "/Identity/Account/Login";
 				options.AccessDeniedPath = "/Identity/Account/AccessDenied";
-				options.SlidingExpiration = true;
+
 			});
 
 			services.AddTransient<IEmailSender, EmailSender>();
