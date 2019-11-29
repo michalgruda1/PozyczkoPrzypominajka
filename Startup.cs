@@ -42,6 +42,10 @@ namespace PozyczkoPrzypominajkaV2
 					mySqlOptions =>
 					{
 						mySqlOptions.ServerVersion(new Version(8, 0, 16), ServerType.MySql);
+						mySqlOptions.EnableRetryOnFailure(
+							maxRetryCount: 3,
+							maxRetryDelay: TimeSpan.FromSeconds(20),
+							errorNumbersToAdd: null);
 					}
 			));
 
@@ -87,6 +91,7 @@ namespace PozyczkoPrzypominajkaV2
 			});
 
 			services.AddTransient<IEmailSender, EmailSender>();
+			services.AddTransient<IEnvironment, Services.Environment>();
 
 			services
 				.AddRazorPages()
