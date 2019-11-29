@@ -2,7 +2,7 @@
 
 namespace PozyczkoPrzypominajkaV2.Services
 {
-	public class Environment
+	public class Environment : IEnvironment
 	{
 		private DateTime NowDateTime = DateTime.Now;
 
