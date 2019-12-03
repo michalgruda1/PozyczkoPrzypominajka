@@ -66,6 +66,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			}
 			else
 			{
+				// TODO zmień identyfikatory przesyłane POST-em z Guid na emaile (bezpieczeństwo danych)
+				// TODO wymuś na modelu, by udzielającym był aktualny użytkownik
 				var giver = await userManager.FindByIdAsync(LoanEM.GiverId);
 				var receiver = await userManager.FindByIdAsync(LoanEM.ReceiverId);
 
