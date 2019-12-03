@@ -20,9 +20,9 @@ namespace PozyczkoPrzypominajkaV2.Data
 			builder.Entity<Loan>().Property(l => l.Date).IsRequired();
 			builder.Entity<Loan>().HasOne(l => l.Giver).WithMany().IsRequired().HasForeignKey("GiverID");
 			builder.Entity<Loan>().HasOne(l => l.Receiver).WithMany().IsRequired().HasForeignKey("ReceiverID");
-			builder.Entity<Loan>().Property(l => l.Amount).IsRequired();
+			builder.Entity<Loan>().Property(l => l.Amount).IsRequired().HasColumnType("decimal(18,4)");
 			builder.Entity<Loan>().Property(l => l.RepaymentDate).IsRequired();
-			builder.Entity<Loan>().Property(l => l.RepaymentAmount).IsRequired();
+			builder.Entity<Loan>().Property(l => l.RepaymentAmount).IsRequired().HasColumnType("decimal(18,4)");
 			builder.Entity<Loan>().Property(l => l.Status).IsRequired().HasConversion<int>();
 			builder.Entity<Loan>().HasMany<Notification>().WithOne(n => n.Loan).HasForeignKey(n => n.LoanID).OnDelete(DeleteBehavior.Cascade).IsRequired();
 
