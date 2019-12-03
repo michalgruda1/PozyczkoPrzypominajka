@@ -1,7 +1,8 @@
-﻿using System;
+﻿using PozyczkoPrzypominajka.Models;
+using System;
 using System.Collections.Generic;
 
-namespace PozyczkoPrzypominajka.Models
+namespace PozyczkoPrzypominajkaV2.Models.Loan
 {
 	public class Loan
 	{
@@ -33,9 +34,9 @@ namespace PozyczkoPrzypominajka.Models
 			{
 				TimeSpan LoanPeriod = RepaymentDate - Date;
 				if (LoanPeriod == TimeSpan.Zero || Amount == 0) return 0;
-				var value = Decimal.ToDouble(RepaymentAmount / Amount);
+				var value = decimal.ToDouble(RepaymentAmount / Amount);
 				var power = 365D / (RepaymentDate - Date).TotalDays;
-				var rrso = (Math.Pow(value, power) - 1);
+				var rrso = Math.Pow(value, power) - 1;
 				return rrso;
 			}
 		}

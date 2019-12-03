@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PozyczkoPrzypominajka.Models;
+using PozyczkoPrzypominajkaV2.Models.Loan;
 
 namespace PozyczkoPrzypominajkaV2.Data
 {

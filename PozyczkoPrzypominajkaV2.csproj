@@ -1,40 +1,40 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
-    <UserSecretsId>aspnet-PozyczkoPrzypominajkaV2-CCAC13A4-CA66-40BE-A2EA-12C5FB6ECA55</UserSecretsId>
-    <IdentityUIFrameworkVersion>Bootstrap4</IdentityUIFrameworkVersion>
-    <AssemblyName>PozyczkoPrzypominajka</AssemblyName>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+		<UserSecretsId>aspnet-PozyczkoPrzypominajkaV2-CCAC13A4-CA66-40BE-A2EA-12C5FB6ECA55</UserSecretsId>
+		<IdentityUIFrameworkVersion>Bootstrap4</IdentityUIFrameworkVersion>
+		<AssemblyName>PozyczkoPrzypominajka</AssemblyName>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Migrations\20190717162146_LoansConnectedToPaymentsAndNotifications.cs" />
-    <Compile Remove="Migrations\20190717162146_LoansConnectedToPaymentsAndNotifications.Designer.cs" />
-    <Compile Remove="Migrations\20190717162933_LoansConnectedToPaymentsAndNotifications.cs" />
-    <Compile Remove="Migrations\20190717162933_LoansConnectedToPaymentsAndNotifications.Designer.cs" />
-    <Compile Remove="Migrations\20190717204452_LoanStatusAdded.cs" />
-    <Compile Remove="Migrations\20190717204452_LoanStatusAdded.Designer.cs" />
-    <Compile Remove="Migrations\20190717220525_UserIDIdentity.cs" />
-    <Compile Remove="Migrations\20190717220525_UserIDIdentity.Designer.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Migrations\20190717162146_LoansConnectedToPaymentsAndNotifications.cs" />
+		<Compile Remove="Migrations\20190717162146_LoansConnectedToPaymentsAndNotifications.Designer.cs" />
+		<Compile Remove="Migrations\20190717162933_LoansConnectedToPaymentsAndNotifications.cs" />
+		<Compile Remove="Migrations\20190717162933_LoansConnectedToPaymentsAndNotifications.Designer.cs" />
+		<Compile Remove="Migrations\20190717204452_LoanStatusAdded.cs" />
+		<Compile Remove="Migrations\20190717204452_LoanStatusAdded.Designer.cs" />
+		<Compile Remove="Migrations\20190717220525_UserIDIdentity.cs" />
+		<Compile Remove="Migrations\20190717220525_UserIDIdentity.Designer.cs" />
+	</ItemGroup>
 
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Razor" Version="3.0.1" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.1" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.CodeAnalysis.Razor" Version="3.0.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
+		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="3.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.0.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0" />
+	</ItemGroup>
 
 </Project>
