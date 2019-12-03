@@ -7,6 +7,7 @@ using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
 using PozyczkoPrzypominajkaV2.Models.Loan;
 using PozyczkoPrzypominajkaV2.Services;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,38 +22,36 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<AppUser> userManager;
 		private readonly IEnvironment environment;
+		private readonly LoanUtilities loanUtilities;
 
-		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager, IEnvironment environment)
+		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager, IEnvironment environment, LoanUtilities loanUtilities)
 		{
 			this.context = context;
 			this.userManager = userManager;
 			this.environment = environment;
+			this.loanUtilities = loanUtilities;
 		}
 
 		public async Task<IActionResult> OnGetAsync()
 		{
 			var me = await userManager.GetUserAsync(User);
-			var receivers = context.Users.Select(u => u.Id != me.Id);
 
 			LoanVM.Amount = 0;
 			LoanVM.DisbursementDate = environment.Now();
-			LoanVM.GiverList = await context.Users.AsNoTracking()
-				.Where(u => u.Id == me.Id) // tylko zalogowany user jest na liście 
-				.Select(u => new SelectListItem()
-				{
-					Text = u.ToString(),
-					Value = u.Id,
-					Selected = u.Id == me.Id, // zalogowany user jest wybrany
-				})
-				.ToListAsync();
-			LoanVM.ReceiverList = await context.Users.AsNoTracking()
-				.Where(u => u.Id != me.Id) // wszyscy prócz zalogowanego są na liście
+
+			LoanVM.GiverList = new List<SelectListItem>();
+			LoanVM.GiverList.Append(new SelectListItem(text: me.ToString(), value: me.Id, selected: true));
+
+			var receivers = loanUtilities.GetPossibleLoanReceiversForUser(me);
+
+			LoanVM.ReceiverList = await receivers.AsNoTracking()
 				.Select(u => new SelectListItem()
 				{
 					Text = u.ToString(),
 					Value = u.Id
 				})
 				.ToListAsync();
+
 			LoanVM.Amount = 0;
 
 			return Page();
