@@ -47,22 +47,22 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DisbursementDate)
+                    @(item.DisbursementDate.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("pl-PL")) ?? string.Empty)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GiverList.Where(u => u.Selected == true).Select(u => u.Text).SingleOrDefault())
+                    @Html.DisplayFor(modelItem => item.GiverList.FirstOrDefault().Text)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.GiverList.Where(u => u.Selected == true).Select(u => u.Text).SingleOrDefault())
+                    @Html.DisplayFor(modelItem => item.ReceiverList.FirstOrDefault().Text)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Amount)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.RepaymentDate)
+                    @(item.RepaymentDate?.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("pl-PL")) ?? string.Empty)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.RepaymentAmount)
@@ -115,37 +115,37 @@
     <tbody>
         @foreach (var item in Model.LoansGivenUnpaid)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisbursementDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Status)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GiverList.Where(u => u.Selected == true).Select(u => u.Text).SingleOrDefault())
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GiverList.Where(u => u.Selected == true).Select(u => u.Text).SingleOrDefault())
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Amount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RepaymentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RepaymentAmount)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Interest)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.LoanId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.LoanId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.LoanId">Delete</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @(item.DisbursementDate.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("pl-PL")) ?? string.Empty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GiverList.FirstOrDefault().Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ReceiverList.FirstOrDefault().Text)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @(item.RepaymentDate?.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("pl-PL")) ?? string.Empty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RepaymentAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Interest)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.LoanId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.LoanId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.LoanId">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

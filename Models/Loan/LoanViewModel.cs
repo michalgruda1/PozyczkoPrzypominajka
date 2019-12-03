@@ -15,10 +15,10 @@ namespace PozyczkoPrzypominajkaV2.Models.Loan
 		public DateTime DisbursementDate { get; set; }
 
 		[Display(Name = "Udzielający")]
-		public IList<SelectListItem> GiverList { get; set; } = new List<SelectListItem>();
+		public IEnumerable<SelectListItem> GiverList { get; set; } = new List<SelectListItem>();
 
 		[Display(Name = "Biorący")]
-		public IList<SelectListItem> ReceiverList { get; set; } = new List<SelectListItem>();
+		public IEnumerable<SelectListItem> ReceiverList { get; set; } = new List<SelectListItem>();
 
 		[Display(Name = "Kwota pożyczki [PLN]"), DataType(DataType.Currency), DisplayFormat(DataFormatString = "{0:C2}")]
 		public decimal? Amount { get; set; }

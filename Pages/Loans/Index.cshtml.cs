@@ -35,29 +35,31 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 
 		private async Task<IList<LoanViewModel>> GetLoansTakenUnpaid(AppUser currentUser)
 		{
-			var receivers = await context.Users
-				.AllAsync(u => u.Id != currentUser.Id);
-
 			var loans = await context.Loans
 				.Where(l =>
 					l.Receiver.Id == currentUser.Id // Aktualny user jest biorącym pożyczkę
-					&& l.Status != StatusEnum.Unpaid)
+					&& l.Status == StatusEnum.Unpaid)
 				.AsNoTracking()
 				.ToListAsync();
+
+			loans.ForEach(l =>
+			{
+				l.Receiver = userManager.FindByIdAsync(l.ReceiverID).Result ?? throw new NullReferenceException();
+				l.Giver = userManager.FindByIdAsync(l.GiverID).Result ?? throw new NullReferenceException();
+			}
+			);
 
 			var loansVM = new List<LoanViewModel>();
 
 			foreach (var loan in loans)
 			{
-				var giverTuple = (text: loan.Giver.ToString(), value: loan.GiverID);
-				var giverAsList = new List<Tuple<string, string>>();
-				giverAsList.Add(giverTuple.ToTuple());
-				var giver = new SelectList(giverAsList, loan.GiverID);
+				var giver = new SelectListItem(text: loan.Giver.ToString(), value: loan.GiverID, selected: true);
+				var giverList = new List<SelectListItem>();
+				giverList.Add(giver);
 
-				var receiverTuple = (text: loan.Giver.ToString(), value: loan.GiverID);
-				var receiverAsList = new List<Tuple<string, string>>();
-				receiverAsList.Add(receiverTuple.ToTuple());
-				var receiver = new SelectList(receiverAsList, loan.GiverID);
+				var receiver = new SelectListItem(text: loan.Receiver.ToString(), value: loan.ReceiverID, selected: true);
+				var receiverList = new List<SelectListItem>();
+				receiverList.Add(receiver);
 
 				// TODO tyle roboty na selecty? Może da się to uprościć?
 
@@ -65,8 +67,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 					new LoanViewModel()
 					{
 						LoanId = loan.LoanID ?? throw new ArgumentNullException(), // To się nie powinno wydarzyć
-						GiverList = giver.ToList(),
-						ReceiverList = receiver.ToList(),
+						GiverList = giverList,
+						ReceiverList = receiverList,
 						DisbursementDate = loan.Date,
 						Amount = loan.Amount,
 						RepaymentDate = loan.RepaymentDate,
@@ -84,29 +86,31 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 
 		private async Task<IList<LoanViewModel>> GetLoansGivenUnpaid(AppUser currentUser)
 		{
-			var receivers = await context.Users
-				.AllAsync(u => u.Id != currentUser.Id);
-
 			var loans = await context.Loans
 				.Where(l =>
 					l.Giver.Id == currentUser.Id // Dający to aktualny użytkownik
-					&& l.Status != StatusEnum.Unpaid)
+					&& l.Status == StatusEnum.Unpaid)
 				.AsNoTracking()
 				.ToListAsync();
+
+			loans.ForEach(l =>
+			{
+				l.Receiver = userManager.FindByIdAsync(l.ReceiverID).Result ?? throw new NullReferenceException();
+				l.Giver = userManager.FindByIdAsync(l.GiverID).Result ?? throw new NullReferenceException();
+			}
+			);
 
 			var loansVM = new List<LoanViewModel>();
 
 			foreach (var loan in loans)
 			{
-				var giverTuple = (text: loan.Giver.ToString(), value: loan.GiverID);
-				var giverAsList = new List<Tuple<string, string>>();
-				giverAsList.Add(giverTuple.ToTuple());
-				var giver = new SelectList(giverAsList, loan.GiverID);
+				var giver = new SelectListItem(text: loan.Giver.ToString(), value: loan.GiverID, selected: true);
+				var giverList = new List<SelectListItem>();
+				giverList.Add(giver);
 
-				var receiverTuple = (text: loan.Giver.ToString(), value: loan.GiverID);
-				var receiverAsList = new List<Tuple<string, string>>();
-				receiverAsList.Add(receiverTuple.ToTuple());
-				var receiver = new SelectList(receiverAsList, loan.GiverID);
+				var receiver = new SelectListItem(text: loan.Receiver.ToString(), value: loan.ReceiverID, selected: true);
+				var receiverList = new List<SelectListItem>();
+				receiverList.Add(receiver);
 
 				// TODO tyle roboty na selecty? Może da się to uprościć?
 
@@ -114,8 +118,8 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 					new LoanViewModel()
 					{
 						LoanId = loan.LoanID ?? throw new ArgumentNullException(), // To się nie powinno wydarzyć
-						GiverList = giver.ToList(),
-						ReceiverList = receiver.ToList(),
+						GiverList = giverList,
+						ReceiverList = receiverList,
 						DisbursementDate = loan.Date,
 						Amount = loan.Amount,
 						RepaymentDate = loan.RepaymentDate,
