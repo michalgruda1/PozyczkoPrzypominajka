@@ -26,11 +26,11 @@ namespace PozyczkoPrzypominajkaV2.Models.Loan
 			return context.Users.Where(u => u.Id != user.Id);
 		}
 
-		public IList<LoanViewModel> GetLoansTakenUnpaid(AppUser me)
+		public IList<LoanViewModel> GetLoansTakenUnpaid(AppUser user)
 		{
 			var loans = context.Loans
 				.Where(l =>
-					l.Receiver.Id == me.Id // Aktualny user jest biorącym pożyczkę
+					l.Receiver.Id == user.Id // Aktualny user jest biorącym pożyczkę
 					&& l.Status == StatusEnum.Unpaid)
 				.AsNoTracking()
 				.ToList();
@@ -77,11 +77,11 @@ namespace PozyczkoPrzypominajkaV2.Models.Loan
 			return loansVM;
 		}
 
-		public IList<LoanViewModel> GetLoansGivenUnpaid(AppUser me)
+		public IList<LoanViewModel> GetLoansGivenUnpaid(AppUser user)
 		{
 			var loans = context.Loans
 				.Where(l =>
-					l.Giver.Id == me.Id // Dający to aktualny użytkownik
+					l.Giver.Id == user.Id // Dający to aktualny użytkownik
 					&& l.Status == StatusEnum.Unpaid)
 				.AsNoTracking()
 				.ToList();
@@ -129,14 +129,13 @@ namespace PozyczkoPrzypominajkaV2.Models.Loan
 			return loansVM;
 		}
 
-		public IQueryable<Loan> GetLoansForUser(AppUser me)
+		public IQueryable<Loan> GetLoansForUser(AppUser user)
 		{
 			return context.Loans
 				.Where(l =>
-					l.GiverID == me.Id
-					|| l.ReceiverID == me.Id)
-				.AsNoTracking()
-				.AsQueryable();
+					l.GiverID == user.Id
+					|| l.ReceiverID == user.Id)
+				.AsNoTracking();
 		}
 	}
 }
