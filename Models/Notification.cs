@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PozyczkoPrzypominajkaV2.Models.Loan;
+using System;
 
 namespace PozyczkoPrzypominajka.Models
 {
@@ -14,7 +15,7 @@ namespace PozyczkoPrzypominajka.Models
 		// for ORM use only
 		private Notification () { }
 
-		public Notification(int notificationID, int loanID, Loan loan, DateTime when, string message, ChannelEnum channel)
+		public Notification(int? notificationID, int loanID, Loan loan, DateTime when, string message, ChannelEnum channel)
 		{
 			NotificationID = notificationID;
 			LoanID = loanID;
