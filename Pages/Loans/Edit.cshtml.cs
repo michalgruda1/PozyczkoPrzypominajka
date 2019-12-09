@@ -82,7 +82,30 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 				return Page();
 			}
 
-			var loan = new Loan(
+			var me = await userManager.GetUserAsync(User);
+			var loanUtilities = new LoanUtilities(context, userManager);
+
+			// Albowiem możesz edytować tylko pożyczkę, której udzieliłeś
+			var loans = loanUtilities.GetLoansForUser(me);
+			var loan = loans
+				.Where(l => l.LoanID == LoanEM.LoanId)
+				.FirstOrDefault();
+			if (loan == null)
+			{
+				return NotFound();
+			}
+
+			// Albowiem nie możesz zmieniać udzielającego w pożyczce
+			var isGiverUnchanged = await loans
+				.Where(l => l.LoanID == LoanEM.LoanId)
+				.Select(l => l.GiverID == me.Id)
+				.AnyAsync();
+			if (!isGiverUnchanged)
+			{
+				return NotFound();
+			}
+
+			var loanEdited = new Loan(
 				loanID: LoanEM.LoanId,
 				date: LoanEM.DisbursementDate,
 				giverID: LoanEM.GiverId,
@@ -96,7 +119,7 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 				notifications: null
 				);
 
-			context.Attach(loan).State = EntityState.Modified;
+			context.Attach(loanEdited).State = EntityState.Modified;
 
 			try
 			{

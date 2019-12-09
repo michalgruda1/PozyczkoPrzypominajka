@@ -2,7 +2,7 @@
 @model PozyczkoPrzypominajkaV2.Pages.Loans.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+	ViewData["Title"] = "Edit";
 }
 
 <h1>Edit</h1>
@@ -10,60 +10,61 @@
 <h4>Loan</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="LoanVM.LoanId" />
-            <div class="form-group">
-                <label asp-for="LoanVM.GiverList" class="control-label"></label>
-                <input asp-for="LoanEM.GiverId" class="form-control" value="@Model.LoanVM.GiverList.Where(g => g.Selected == true).Select(g => g.Text).FirstOrDefault()" disabled>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanVM.ReceiverList" class="control-label"></label>
-                <select asp-for="LoanEM.ReceiverId" asp-items="@Model.LoanVM.ReceiverList" class="form-control">
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanVM.DisbursementDate" class="control-label"></label>
-                <input asp-for="LoanEM.DisbursementDate" class="form-control" value="@Model.LoanVM.DisbursementDate."/>
-                <span asp-validation-for="LoanEM.DisbursementDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanVM.Amount" class="control-label"></label>
-                <input asp-for="LoanEM.Amount" class="form-control" value="@Model.LoanVM.Amount"/>
-                <span asp-validation-for="LoanEM.Amount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanVM.RepaymentDate" class="control-label"></label>
-                <input asp-for="LoanEM.RepaymentDate" class="form-control" value="@Model.LoanVM.Amount"/>
-                <span asp-validation-for="LoanEM.RepaymentDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanVM.RepaymentAmount" class="control-label"></label>
-                <input asp-for="LoanEM.RepaymentAmount" class="form-control" value="@Model.LoanVM.RepaymentAmount"/>
-                <span asp-validation-for="LoanEM.RepaymentAmount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanVM.Status" class="control-label"></label>
-                <input asp-for="LoanEM.Status" class="form-control" disabled value="@Model.LoanVM.Status"/>
-                <span asp-validation-for="LoanEM.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="LoanVM.Interest" class="control-label"></label>
-                <input asp-for="LoanVM.Interest" class="form-control" disabled />
-            </div>
+	<div class="col-md-4">
+		<form method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="LoanEM.LoanId" value="@Model.LoanVM.LoanId" />
+			<input type="hidden" asp-for="LoanEM.GiverId" value="@Model.LoanVM.GiverList.Where(g => g.Selected == true).Select(g => g.Value).SingleOrDefault()"/>
+			<div class="form-group">
+				<label asp-for="LoanVM.GiverList" class="control-label"></label>
+				<input class="form-control" value="@Model.LoanVM.GiverList.Where(g => g.Selected == true).Select(g => g.Text).SingleOrDefault()" disabled>
+			</div>
+			<div class="form-group">
+				<label asp-for="LoanVM.ReceiverList" class="control-label"></label>
+				<select asp-for="LoanEM.ReceiverId" asp-items="@Model.LoanVM.ReceiverList" class="form-control">
+				</select>
+			</div>
+			<div class="form-group">
+				<label asp-for="LoanVM.DisbursementDate" class="control-label"></label>
+				<input asp-for="LoanEM.DisbursementDate" class="form-control" value="@Model.LoanVM.DisbursementDate."/>
+				<span asp-validation-for="LoanEM.DisbursementDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LoanVM.Amount" class="control-label"></label>
+				<input asp-for="LoanEM.Amount" class="form-control" value="@Model.LoanVM.Amount"/>
+				<span asp-validation-for="LoanEM.Amount" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LoanVM.RepaymentDate" class="control-label"></label>
+				<input asp-for="LoanEM.RepaymentDate" class="form-control" value="@Model.LoanVM.Amount"/>
+				<span asp-validation-for="LoanEM.RepaymentDate" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LoanVM.RepaymentAmount" class="control-label"></label>
+				<input asp-for="LoanEM.RepaymentAmount" class="form-control" value="@Model.LoanVM.RepaymentAmount"/>
+				<span asp-validation-for="LoanEM.RepaymentAmount" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LoanVM.Status" class="control-label"></label>
+				<input asp-for="LoanEM.Status" class="form-control" disabled value="@Model.LoanVM.Status"/>
+				<span asp-validation-for="LoanEM.Status" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="LoanVM.Interest" class="control-label"></label>
+				<input asp-for="LoanVM.Interest" class="form-control" disabled />
+			</div>
 
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+	</div>
 </div>
 
 <div>
-    <a asp-page="./Index">Back to List</a>
+	<a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
