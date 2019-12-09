@@ -26,7 +26,7 @@ namespace PozyczkoPrzypominajkaV2.Models.Loan
 			return context.Users.Where(u => u.Id != user.Id);
 		}
 
-		public IList<LoanViewModel> GetLoansTakenUnpaid(AppUser user)
+		public async System.Threading.Tasks.Task<IList<LoanViewModel>> GetLoansTakenUnpaidAsync(AppUser user)
 		{
 			var loans = context.Loans
 				.Where(l =>
@@ -36,20 +36,17 @@ namespace PozyczkoPrzypominajkaV2.Models.Loan
 				.ToList();
 
 			// TODO Wyjmij logikę tworzenia listy z SelectListItem do zewnętrznej klasy / metody
-			loans.ForEach(async l =>
-			{
-				l.Receiver = await userManager.FindByIdAsync(l.ReceiverID) ?? throw new NullReferenceException();
-				l.Giver = await userManager.FindByIdAsync(l.GiverID) ?? throw new NullReferenceException();
-			});
 
 			var loansVM = new List<LoanViewModel>();
 
 			foreach (var loan in loans)
 			{
+				loan.Giver = await userManager.FindByIdAsync(loan.GiverID) ?? throw new NullReferenceException();
 				var giver = new SelectListItem(text: loan.Giver.ToString(), value: loan.GiverID, selected: true);
 				var giverList = new List<SelectListItem>();
 				giverList.Add(giver);
 
+				loan.Receiver = await userManager.FindByIdAsync(loan.ReceiverID) ?? throw new NullReferenceException();
 				var receiver = new SelectListItem(text: loan.Receiver.ToString(), value: loan.ReceiverID, selected: true);
 				var receiverList = new List<SelectListItem>();
 				receiverList.Add(receiver);
@@ -77,7 +74,7 @@ namespace PozyczkoPrzypominajkaV2.Models.Loan
 			return loansVM;
 		}
 
-		public IList<LoanViewModel> GetLoansGivenUnpaid(AppUser user)
+		public async System.Threading.Tasks.Task<IList<LoanViewModel>> GetLoansGivenUnpaidAsync(AppUser user)
 		{
 			var loans = context.Loans
 				.Where(l =>
@@ -88,20 +85,16 @@ namespace PozyczkoPrzypominajkaV2.Models.Loan
 
 			// TODO Wyjmij logikę tworzenia listy z SelectListItem do zewnętrznej klasy / metody
 
-			loans.ForEach(async l =>
-			{
-				l.Receiver = await userManager.FindByIdAsync(l.ReceiverID) ?? throw new NullReferenceException();
-				l.Giver = await userManager.FindByIdAsync(l.GiverID) ?? throw new NullReferenceException();
-			});
-
 			var loansVM = new List<LoanViewModel>();
 
 			foreach (var loan in loans)
 			{
+				loan.Giver = await userManager.FindByIdAsync(loan.GiverID) ?? throw new NullReferenceException();
 				var giver = new SelectListItem(text: loan.Giver.ToString(), value: loan.GiverID, selected: true);
 				var giverList = new List<SelectListItem>();
 				giverList.Add(giver);
 
+				loan.Receiver = await userManager.FindByIdAsync(loan.ReceiverID) ?? throw new NullReferenceException();
 				var receiver = new SelectListItem(text: loan.Receiver.ToString(), value: loan.ReceiverID, selected: true);
 				var receiverList = new List<SelectListItem>();
 				receiverList.Add(receiver);

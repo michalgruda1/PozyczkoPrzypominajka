@@ -29,7 +29,7 @@ namespace PozyczkoPrzypominajkaV2.Models.Loan
 		[Display(Name = "Kwota spłaty [PLN]"), DataType(DataType.Currency), DisplayFormat(DataFormatString = "{0:C2}")]
 		public decimal? RepaymentAmount { get; set; }
 
-		[Display(Name = "Oprocentowanie (RRSO)"), DataType(DataType.Text), DisplayFormat(DataFormatString = "{0:P0}")]
+		[Display(Name = "Oprocentowanie (RRSO)"), DataType(DataType.Text), DisplayFormat(DataFormatString = "{0:P}")]
 		public double? Interest { get; set; }
 
 		[EnumDataType(typeof(StatusEnum)), DataType(DataType.Text)]

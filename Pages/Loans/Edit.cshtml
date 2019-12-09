@@ -13,44 +13,44 @@
     <div class="col-md-4">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Loan.LoanID" />
-            <input type="hidden" asp-for="Loan.GiverID" />
-            <input type="hidden" asp-for="Loan.ReceiverID" />
+            <input type="hidden" asp-for="LoanVM.LoanId" />
             <div class="form-group">
-                <label asp-for="Loan.Date" class="control-label"></label>
-                <input asp-for="Loan.Date" class="form-control" />
-                <span asp-validation-for="Loan.Date" class="text-danger"></span>
+                <label asp-for="LoanVM.GiverList" class="control-label"></label>
+                <input asp-for="LoanEM.GiverId" class="form-control" value="@Model.LoanVM.GiverList.Where(g => g.Selected == true).Select(g => g.Text).FirstOrDefault()" disabled>
             </div>
             <div class="form-group">
-                <label asp-for="Loan.Giver" class="control-label"></label>
-                <input asp-for="Loan.Giver" class="form-control" disabled />
+                <label asp-for="LoanVM.ReceiverList" class="control-label"></label>
+                <select asp-for="LoanEM.ReceiverId" asp-items="@Model.LoanVM.ReceiverList" class="form-control">
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="Loan.Receiver" class="control-label"></label>
-                <input asp-for="Loan.Receiver" class="form-control" disabled />
+                <label asp-for="LoanVM.DisbursementDate" class="control-label"></label>
+                <input asp-for="LoanEM.DisbursementDate" class="form-control" value="@Model.LoanVM.DisbursementDate."/>
+                <span asp-validation-for="LoanEM.DisbursementDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Loan.Amount" class="control-label"></label>
-                <input asp-for="Loan.Amount" class="form-control" />
-                <span asp-validation-for="Loan.Amount" class="text-danger"></span>
+                <label asp-for="LoanVM.Amount" class="control-label"></label>
+                <input asp-for="LoanEM.Amount" class="form-control" value="@Model.LoanVM.Amount"/>
+                <span asp-validation-for="LoanEM.Amount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Loan.RepaymentDate" class="control-label"></label>
-                <input asp-for="Loan.RepaymentDate" class="form-control" />
-                <span asp-validation-for="Loan.RepaymentDate" class="text-danger"></span>
+                <label asp-for="LoanVM.RepaymentDate" class="control-label"></label>
+                <input asp-for="LoanEM.RepaymentDate" class="form-control" value="@Model.LoanVM.Amount"/>
+                <span asp-validation-for="LoanEM.RepaymentDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Loan.RepaymentAmount" class="control-label"></label>
-                <input asp-for="Loan.RepaymentAmount" class="form-control" />
-                <span asp-validation-for="Loan.RepaymentAmount" class="text-danger"></span>
+                <label asp-for="LoanVM.RepaymentAmount" class="control-label"></label>
+                <input asp-for="LoanEM.RepaymentAmount" class="form-control" value="@Model.LoanVM.RepaymentAmount"/>
+                <span asp-validation-for="LoanEM.RepaymentAmount" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Loan.Status" class="control-label"></label>
-                <input asp-for="Loan.Status" class="form-control" disabled />
+                <label asp-for="LoanVM.Status" class="control-label"></label>
+                <input asp-for="LoanEM.Status" class="form-control" disabled value="@Model.LoanVM.Status"/>
+                <span asp-validation-for="LoanEM.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Loan.Interest" class="control-label"></label>
-                <input asp-for="Loan.Interest" class="form-control" disabled />
+                <label asp-for="LoanVM.Interest" class="control-label"></label>
+                <input asp-for="LoanVM.Interest" class="form-control" disabled />
             </div>
 
             <div class="form-group">

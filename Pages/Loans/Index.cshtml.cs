@@ -12,13 +12,11 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 	{
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<AppUser> userManager;
-		private readonly LoanUtilities loanUtilities;
 
-		public IndexModel(ApplicationDbContext context, UserManager<AppUser> userManager, LoanUtilities loanUtilities)
+		public IndexModel(ApplicationDbContext context, UserManager<AppUser> userManager)
 		{
 			this.context = context;
 			this.userManager = userManager;
-			this.loanUtilities = loanUtilities;
 		}
 
 		public IList<LoanViewModel> LoansGivenUnpaid { get; set; } = new List<LoanViewModel>();
@@ -27,8 +25,10 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 		public async Task OnGetAsync()
 		{
 			var me = await userManager.GetUserAsync(User);
-			LoansGivenUnpaid = loanUtilities.GetLoansGivenUnpaid(me);
-			LoansTakenUnpaid = loanUtilities.GetLoansTakenUnpaid(me);
+			var loanUtilities = new LoanUtilities(context, userManager);
+
+			LoansGivenUnpaid = await loanUtilities.GetLoansGivenUnpaidAsync(me);
+			LoansTakenUnpaid = await loanUtilities.GetLoansTakenUnpaidAsync(me);
 		}
 	}
 }
