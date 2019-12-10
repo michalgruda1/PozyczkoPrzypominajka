@@ -8,6 +8,7 @@ using PozyczkoPrzypominajkaV2.Data;
 using PozyczkoPrzypominajkaV2.Models.Loan;
 using PozyczkoPrzypominajkaV2.Services;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,14 +23,12 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<AppUser> userManager;
 		private readonly IEnvironment environment;
-		private readonly LoanUtilities loanUtilities;
 
-		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager, IEnvironment environment, LoanUtilities loanUtilities)
+		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager, IEnvironment environment)
 		{
 			this.context = context;
 			this.userManager = userManager;
 			this.environment = environment;
-			this.loanUtilities = loanUtilities;
 		}
 
 		public async Task<IActionResult> OnGetAsync()
@@ -40,8 +39,9 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			LoanVM.DisbursementDate = environment.Now();
 
 			LoanVM.GiverList = new List<SelectListItem>();
-			LoanVM.GiverList.Append(new SelectListItem(text: me.ToString(), value: me.Id, selected: true));
+			LoanVM.GiverList.Add(new SelectListItem(text: me.ToString(), value: me.Id, selected: true));
 
+			var loanUtilities = new LoanUtilities(context, userManager);
 			var receivers = loanUtilities.GetPossibleLoanReceiversForUser(me);
 
 			LoanVM.ReceiverList = await receivers.AsNoTracking()

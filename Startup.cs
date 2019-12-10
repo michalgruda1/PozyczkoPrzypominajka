@@ -137,7 +137,7 @@ namespace PozyczkoPrzypominajkaV2
 			DBInitialization.SeedAdminUsers(userManager, configuration);
 			DBInitialization.SeedUsers(userManager);
 
-			var defaultCulture = new CultureInfo("pl-PL");
+			var defaultCulture = new CultureInfo("en-US");
 			var localizationOptions = new RequestLocalizationOptions
 			{
 				DefaultRequestCulture = new RequestCulture(defaultCulture),

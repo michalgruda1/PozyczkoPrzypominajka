@@ -59,13 +59,14 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 					Selected = true
 				}
 			};
-			LoanVM.ReceiverList = loanUtilities.GetPossibleLoanReceiversForUser(me)
+			LoanVM.ReceiverList = await loanUtilities.GetPossibleLoanReceiversForUser(me)
 				.Select(u => new SelectListItem()
 				{
 					Text = u.ToString(),
 					Value = u.Id,
 					Selected = loan.ReceiverID == u.Id
-				});
+				})
+				.ToListAsync();
 			LoanVM.DisbursementDate = loan.Date;
 			LoanVM.Amount = loan.Amount;
 			LoanVM.RepaymentDate = loan.RepaymentDate;

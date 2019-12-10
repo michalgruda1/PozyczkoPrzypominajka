@@ -1,6 +1,7 @@
 ﻿@page
 @model PozyczkoPrzypominajkaV2.Pages.Loans.CreateModel
 @inject Services.IEnvironment Environment
+@using System.Globalization
 
 @{
 	ViewData["Title"] = "Nowa pożyczka";
@@ -29,7 +30,7 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.DisbursementDate" class="control-label"></label>
-				<input asp-for="LoanEM.DisbursementDate" class="form-control" value="@Environment.Now()"/>
+				<input asp-for="LoanEM.DisbursementDate" class="form-control" value="@Environment.Now().ToString("yyyy-MM-dd")" />
 				<span asp-validation-for="LoanEM.DisbursementDate" class="text-danger"></span>
 			</div>
 			<div class="form-group">
@@ -39,7 +40,7 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.RepaymentDate" class="control-label"></label>
-				<input asp-for="LoanEM.RepaymentDate" class="form-control" value="@(Environment.Now() + TimeSpan.FromDays(7))"/>
+				<input asp-for="LoanEM.RepaymentDate" class="form-control" value="@((Environment.Now() + TimeSpan.FromDays(7)).ToString("yyyy-MM-dd"))" />
 				<span asp-validation-for="LoanEM.RepaymentDate" class="text-danger"></span>
 			</div>
 			<div class="form-group">
