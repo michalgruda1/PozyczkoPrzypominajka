@@ -2,150 +2,150 @@
 @model PozyczkoPrzypominajkaV2.Pages.Loans.IndexModel
 
 @{
-    ViewData["Title"] = "Moje pożyczki";
+	ViewData["Title"] = "Moje pożyczki";
 }
 
 <h1 class="my-lg-5">Moje pożyczki</h1>
 
 <p>
-    <a asp-page="Create">Nowa pożyczka</a>
+	<a asp-page="Create">Nowa pożyczka</a>
 </p>
 <h3>Wzięte, niespłacone</h3>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].DisbursementDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].GiverList)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].ReceiverList)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].RepaymentDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].RepaymentAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Interest)
-            </th>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].DisbursementDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Status)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].GiverList)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].ReceiverList)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Amount)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].RepaymentDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].RepaymentAmount)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansTakenUnpaid[0].Interest)
+			</th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.LoansTakenUnpaid)
-        {
-            <tr>
-                <td>
-                    @(item.DisbursementDate.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("pl-PL")) ?? string.Empty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GiverList.FirstOrDefault().Text)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReceiverList.FirstOrDefault().Text)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @(item.RepaymentDate?.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("pl-PL")) ?? string.Empty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RepaymentAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Interest)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.LoanId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.LoanId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.LoanId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.LoansTakenUnpaid)
+		{
+			<tr>
+				<td>
+					@Html.DisplayFor(modelItem => item.DisbursementDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Status)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.GiverList.FirstOrDefault().Text)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.ReceiverList.FirstOrDefault().Text)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Amount)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.RepaymentDate)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.RepaymentAmount)
+				</td>
+				<td>
+					@Html.DisplayFor(modelItem => item.Interest)
+				</td>
+				<td>
+					<a asp-page="./Edit" asp-route-id="@item.LoanId">Edit</a> |
+					<a asp-page="./Details" asp-route-id="@item.LoanId">Details</a> |
+					<a asp-page="./Delete" asp-route-id="@item.LoanId">Delete</a>
+				</td>
+			</tr>
+		}
+	</tbody>
 </table>
 
 <h3>Udzielone, niespłacone</h3>
 <table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].DisbursementDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Status)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].GiverList)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].ReceiverList)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Amount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].RepaymentDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].RepaymentAmount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Interest)
-            </th>
+	<thead>
+		<tr>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].DisbursementDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Status)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].GiverList)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].ReceiverList)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Amount)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].RepaymentDate)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].RepaymentAmount)
+			</th>
+			<th>
+				@Html.DisplayNameFor(model => model.LoansGivenUnpaid[0].Interest)
+			</th>
 
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.LoansGivenUnpaid)
-        {
-            <tr>
-                <td>
-                    @(item.DisbursementDate.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("pl-PL")) ?? string.Empty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GiverList.FirstOrDefault().Text)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ReceiverList.FirstOrDefault().Text)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @(item.RepaymentDate?.ToString("d", System.Globalization.CultureInfo.CreateSpecificCulture("pl-PL")) ?? string.Empty)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.RepaymentAmount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Interest)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.LoanId">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.LoanId">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.LoanId">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var item in Model.LoansGivenUnpaid)
+		{
+		<tr>
+			<td>
+				@Html.DisplayFor(modelItem => item.DisbursementDate)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Status)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.GiverList.FirstOrDefault().Text)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.ReceiverList.FirstOrDefault().Text)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Amount)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.RepaymentDate)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.RepaymentAmount)
+			</td>
+			<td>
+				@Html.DisplayFor(modelItem => item.Interest)
+			</td>
+			<td>
+				<a asp-page="./Edit" asp-route-id="@item.LoanId">Edit</a> |
+				<a asp-page="./Details" asp-route-id="@item.LoanId">Details</a> |
+				<a asp-page="./Delete" asp-route-id="@item.LoanId">Delete</a>
+			</td>
+		</tr>
+		}
+	</tbody>
 </table>

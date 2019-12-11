@@ -10,7 +10,7 @@ namespace PozyczkoPrzypominajka.Models
 		[Display(Name = "Data udzielenia")]
 		[Required(ErrorMessage = "{0} jest wymagana")]
 		[DataType(DataType.Date)]
-		[DisplayFormat(DataFormatString = "yyyy-MM-dd")]
+		// [DisplayFormat(DataFormatString = "yyyy-MM-dd")]
 		public DateTime DisbursementDate { get; set; }
 
 		[Display(Name = "Udzielający")]
@@ -26,19 +26,19 @@ namespace PozyczkoPrzypominajka.Models
 		[Display(Name = "Kwota pożyczki [PLN]")]
 		[Required(ErrorMessage = "{0} jest wymagana")]
 		[DataType(DataType.Currency)]
-		[DisplayFormat(DataFormatString = "0:C0")]
+		[DisplayFormat(DataFormatString = "{0:C2}")]
 		public decimal Amount { get; set; }
 
 		[Display(Name = "Data spłaty")]
 		[Required(ErrorMessage = "{0} jest wymagana")]
 		[DataType(DataType.Date)]
-		[DisplayFormat(DataFormatString = "yyyy-MM-dd")]
+		[DisplayFormat(DataFormatString = "{0:s}")]
 		public DateTime RepaymentDate { get; set; }
 
 		[Display(Name = "Kwota spłaty [PLN]")]
 		[Required(ErrorMessage = "{0} jest wymagana")]
 		[DataType(DataType.Currency)]
-		[DisplayFormat(DataFormatString = "0:C0")]
+		[DisplayFormat(DataFormatString = "{0:C2}")]
 		public decimal RepaymentAmount { get; set; }
 
 		[Required(ErrorMessage = "{0} jest wymagany")]
