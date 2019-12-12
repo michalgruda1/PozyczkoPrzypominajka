@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
+using PozyczkoPrzypominajkaV2.Models;
 using PozyczkoPrzypominajkaV2.Services;
 using System;
 
@@ -89,6 +90,7 @@ namespace PozyczkoPrzypominajkaV2
 
 			services.AddTransient<IEmailSender, EmailSender>();
 			services.AddTransient<IEnvironment, Services.Environment>();
+			services.AddTransient<LoanUtilities, LoanUtilities>();
 
 			services
 				.AddRazorPages()

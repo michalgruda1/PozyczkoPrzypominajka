@@ -21,12 +21,14 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<AppUser> userManager;
+		private readonly LoanUtilities loanUtilities;
 		private readonly IEnvironment environment;
 
-		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager, IEnvironment environment)
+		public CreateModel(ApplicationDbContext context, UserManager<AppUser> userManager, LoanUtilities loanUtilities, IEnvironment environment)
 		{
 			this.context = context;
 			this.userManager = userManager;
+			this.loanUtilities = loanUtilities;
 			this.environment = environment;
 		}
 
@@ -40,7 +42,6 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			LoanVM.GiverList = new List<SelectListItem>();
 			LoanVM.GiverList.Add(new SelectListItem(text: me.ToString(), value: me.Id, selected: true));
 
-			var loanUtilities = new LoanUtilities(context, userManager);
 			var receivers = loanUtilities.GetPossibleLoanReceiversForUser(me);
 
 			LoanVM.ReceiverList = await receivers.AsNoTracking()

@@ -17,15 +17,17 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 	{
 		private readonly ApplicationDbContext context;
 		private readonly UserManager<AppUser> userManager;
+		private readonly LoanUtilities loanUtilities;
 
 		[BindProperty]
 		public LoanEditModel LoanEM { get; set; } = new LoanEditModel() { };
 		public LoanViewModel LoanVM { get; set; } = new LoanViewModel() { };
 
-		public EditModel(ApplicationDbContext context, UserManager<AppUser> userManager)
+		public EditModel(ApplicationDbContext context, UserManager<AppUser> userManager, LoanUtilities loanUtilities)
 		{
 			this.context = context;
 			this.userManager = userManager;
+			this.loanUtilities = loanUtilities;
 		}
 
 		public async Task<IActionResult> OnGetAsync(int? id)
@@ -36,7 +38,6 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			}
 
 			var me = await userManager.GetUserAsync(User);
-			var loanUtilities = new LoanUtilities(context, userManager);
 
 			// Albowiem nie możesz edytować nie swoich pożyczek
 			var loans = loanUtilities.GetLoansForUser(me);
@@ -85,7 +86,6 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			}
 
 			var me = await userManager.GetUserAsync(User);
-			var loanUtilities = new LoanUtilities(context, userManager);
 
 			// Albowiem możesz edytować tylko pożyczkę, której udzieliłeś
 			var loans = loanUtilities.GetLoansForUser(me);
