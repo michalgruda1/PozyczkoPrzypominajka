@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
-using PozyczkoPrzypominajkaV2.Models.Loan;
+using PozyczkoPrzypominajkaV2.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

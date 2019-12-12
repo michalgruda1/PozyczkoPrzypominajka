@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PozyczkoPrzypominajkaV2.Models.Loan
+namespace PozyczkoPrzypominajkaV2.Models
 {
 	public class Loan
 	{

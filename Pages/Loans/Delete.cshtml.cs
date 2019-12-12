@@ -1,18 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using PozyczkoPrzypominajkaV2.Models.Loan;
+using PozyczkoPrzypominajka.Models;
+using PozyczkoPrzypominajkaV2.Data;
+using PozyczkoPrzypominajkaV2.Models;
 using System.Threading.Tasks;
 
 namespace PozyczkoPrzypominajkaV2.Pages.Loans
 {
   public class DeleteModel : PageModel
   {
-    private readonly PozyczkoPrzypominajkaV2.Data.ApplicationDbContext _context;
+    private readonly ApplicationDbContext context;
+    private readonly UserManager<AppUser> userManager;
 
-    public DeleteModel(PozyczkoPrzypominajkaV2.Data.ApplicationDbContext context)
+    public DeleteModel(ApplicationDbContext context, UserManager<AppUser> userManager)
     {
-      _context = context;
+      this.context = context;
+      this.userManager = userManager;
     }
 
     [BindProperty]
@@ -25,12 +30,19 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
         return NotFound();
       }
 
-      Loan = await _context.Loans.FirstOrDefaultAsync(m => m.LoanID == id);
+      Loan = await context.Loans.FirstOrDefaultAsync(m => m.LoanID == id);
 
       if (Loan == null)
       {
         return NotFound();
       }
+
+      if (Loan.GiverID != userManager.GetUserId(User))
+      {
+        // Albowiem nie możesz kasować pożyczki jeśli nie jesteś pożyczkodawcą
+        return NotFound();
+      }
+
       return Page();
     }
 
@@ -41,12 +53,15 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
         return NotFound();
       }
 
-      Loan = await _context.Loans.FindAsync(id);
+      Loan = await context.Loans.FindAsync(id);
 
-      if (Loan != null)
+      // Albowiem nie możesz kasować pożyczki jeśli nie jesteś pożyczkodawcą
+      var isMine = Loan.GiverID == userManager.GetUserId(User);
+
+      if (Loan != null && isMine)
       {
-        _context.Loans.Remove(Loan);
-        await _context.SaveChangesAsync();
+        context.Loans.Remove(Loan);
+        await context.SaveChangesAsync();
       }
 
       return RedirectToPage("./Index");

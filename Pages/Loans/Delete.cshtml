@@ -16,7 +16,19 @@
             @Html.DisplayNameFor(model => model.Loan.Date)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Loan.Date)
+            @Html.DisplayFor(model => model.Loan.Date.Date)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Loan.Giver)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Loan.Giver)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Loan.Receiver)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Loan.Receiver)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Loan.Amount)

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
-using PozyczkoPrzypominajkaV2.Models.Loan;
+using PozyczkoPrzypominajkaV2.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

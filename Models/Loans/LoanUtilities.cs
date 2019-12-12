@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PozyczkoPrzypominajkaV2.Models.Loan
+namespace PozyczkoPrzypominajkaV2.Models
 {
 	public class LoanUtilities
 	{

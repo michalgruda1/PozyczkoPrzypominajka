@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using PozyczkoPrzypominajkaV2.Models.Loan;
+using PozyczkoPrzypominajkaV2.Models;
 using System.Threading.Tasks;
 
 namespace PozyczkoPrzypominajkaV2.Pages.Loans
 {
-  public class DetailsModel : PageModel
+	public class DetailsModel : PageModel
   {
     private readonly PozyczkoPrzypominajkaV2.Data.ApplicationDbContext _context;
 

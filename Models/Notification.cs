@@ -1,4 +1,4 @@
-﻿using PozyczkoPrzypominajkaV2.Models.Loan;
+﻿using PozyczkoPrzypominajkaV2.Models;
 using System;
 
 namespace PozyczkoPrzypominajka.Models
