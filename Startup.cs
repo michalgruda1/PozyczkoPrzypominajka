@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,11 +10,8 @@ using Microsoft.Extensions.Hosting;
 using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using PozyczkoPrzypominajka.Models;
 using PozyczkoPrzypominajkaV2.Data;
-using PozyczkoPrzypominajkaV2.Models.Loan;
 using PozyczkoPrzypominajkaV2.Services;
 using System;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace PozyczkoPrzypominajkaV2
 {
@@ -137,14 +133,14 @@ namespace PozyczkoPrzypominajkaV2
 			DBInitialization.SeedAdminUsers(userManager, configuration);
 			DBInitialization.SeedUsers(userManager);
 
-			var defaultCulture = new CultureInfo("en-US");
-			var localizationOptions = new RequestLocalizationOptions
-			{
-				DefaultRequestCulture = new RequestCulture(defaultCulture),
-				SupportedCultures = new List<CultureInfo> { defaultCulture },
-				SupportedUICultures = new List<CultureInfo> { defaultCulture }
-			};
-			app.UseRequestLocalization(localizationOptions);
+			//var defaultCulture = new CultureInfo("en-US");
+			//var localizationOptions = new RequestLocalizationOptions
+			//{
+			//	DefaultRequestCulture = new RequestCulture(defaultCulture),
+			//	SupportedCultures = new List<CultureInfo> { defaultCulture },
+			//	SupportedUICultures = new List<CultureInfo> { defaultCulture }
+			//};
+			//app.UseRequestLocalization(localizationOptions);
 
 		}
 	}

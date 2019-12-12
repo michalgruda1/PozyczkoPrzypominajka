@@ -26,27 +26,27 @@
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.DisbursementDate" class="control-label"></label>
-				<input asp-for="LoanEM.DisbursementDate" class="form-control" value="@Model.LoanVM.DisbursementDate."/>
+				<input asp-for="LoanEM.DisbursementDate" class="form-control" value="@Model.LoanVM.DisbursementDate.ToString("yyyy-MM-dd")" />
 				<span asp-validation-for="LoanEM.DisbursementDate" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.Amount" class="control-label"></label>
-				<input asp-for="LoanEM.Amount" class="form-control" value="@Model.LoanVM.Amount"/>
+				<input asp-for="LoanEM.Amount" class="form-control" value="@(Model.LoanVM.Amount?.ToString("0") ?? string.Empty)" />
 				<span asp-validation-for="LoanEM.Amount" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.RepaymentDate" class="control-label"></label>
-				<input asp-for="LoanEM.RepaymentDate" class="form-control" value="@Model.LoanVM.Amount"/>
+				<input asp-for="LoanEM.RepaymentDate" class="form-control" value="@(Model.LoanVM.RepaymentDate?.ToString("yyyy-MM-dd") ?? string.Empty)" />
 				<span asp-validation-for="LoanEM.RepaymentDate" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.RepaymentAmount" class="control-label"></label>
-				<input asp-for="LoanEM.RepaymentAmount" class="form-control" value="@Model.LoanVM.RepaymentAmount"/>
+				<input asp-for="LoanEM.RepaymentAmount" class="form-control" value="@(Model.LoanVM.RepaymentAmount?.ToString("0") ?? string.Empty)" />
 				<span asp-validation-for="LoanEM.RepaymentAmount" class="text-danger"></span>
 			</div>
 			<div class="form-group">
 				<label asp-for="LoanVM.Status" class="control-label"></label>
-				<input asp-for="LoanEM.Status" class="form-control" disabled value="@Model.LoanVM.Status"/>
+				<input asp-for="LoanEM.Status" class="form-control" disabled value="@Model.LoanVM.Status" />
 				<span asp-validation-for="LoanEM.Status" class="text-danger"></span>
 			</div>
 			<div class="form-group">

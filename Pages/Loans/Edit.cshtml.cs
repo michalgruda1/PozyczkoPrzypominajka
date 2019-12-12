@@ -72,6 +72,7 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 			LoanVM.RepaymentDate = loan.RepaymentDate;
 			LoanVM.RepaymentAmount = loan.RepaymentAmount;
 			LoanVM.Interest = loan.Interest;
+			LoanVM.Status = loan.Status;
 
 			return Page();
 		}
@@ -112,11 +113,13 @@ namespace PozyczkoPrzypominajkaV2.Pages.Loans
 				giverID: LoanEM.GiverId,
 				giver: await userManager.FindByIdAsync(LoanEM.GiverId),
 				receiverID: LoanEM.ReceiverId,
-				receiver: await userManager.GetUserAsync(User),
+				receiver: await userManager.FindByIdAsync(LoanEM.ReceiverId),
 				amount: LoanEM.Amount,
 				repaymentDate: LoanEM.RepaymentDate,
 				repaymentAmount: LoanEM.RepaymentAmount,
-				status: LoanEM.Status,
+				
+				// Albowiem status nie może zmienić się przy edycji
+				status: loan.Status,
 				notifications: null
 				);
 
